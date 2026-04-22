@@ -26,13 +26,8 @@
               }
             ],
             "styles": ["src/styles.css"],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
             "security": {
               "allowedHosts": []
-            },
-            "ssr": {
-              "entry": "src/server.ts"
             }
           },
           "configurations": {
@@ -61,6 +56,11 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "hmr": false,
+            "liveReload": true,
+            "poll": 1000
+          },
           "configurations": {
             "production": {
               "buildTarget": "portfolio-angular:build:production"
