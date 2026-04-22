@@ -3,14 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --live-reload --no-hmr --poll=1000",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:portfolio-angular": "node dist/portfolio-angular/server/server.mjs"
   },
   "private": true,
-  "packageManager": "yarn@1.22.22",
+  "packageManager": "npm@11",
   "dependencies": {
     "@angular/common": "^21.2.0",
     "@angular/compiler": "^21.2.0",

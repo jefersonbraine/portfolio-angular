@@ -1,0 +1,26 @@
+<app-navbar [currentSection]="activeSection()" />
+
+<main>
+  @switch (activeSection()) {
+    @case ('home') {
+      <app-home />
+    }
+    @case ('formacao') {
+      <app-formacao />
+    }
+    @case ('cursos') {
+      <app-cursos />
+    }
+    @case ('projetos') {
+      <app-projetos />
+    }
+    @case ('sobre-mim') {
+      <app-sobre-mim />
+    }
+    @case ('contato') {
+      <app-contato />
+    }
+  }
+</main>
+
+<app-footer />
