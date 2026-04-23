@@ -1,1 +1,176 @@
-<p>cursos works!</p>
+<section class="mx-auto w-full max-w-6xl pb-6 pt-3 sm:pt-6">
+  <header class="fade-up mb-12 text-center" [style.animation-delay.ms]="50">
+    <h1 class="text-4xl font-bold text-white md:text-5xl">Educação Continuada</h1>
+    <p class="mt-4 text-gray-400">Cursos, certificações e desenvolvimento profissional</p>
+  </header>
+
+  <div class="mb-12 grid grid-cols-1 gap-4 sm:grid-cols-3">
+    @for (stat of stats; track stat.label; let statIndex = $index) {
+      <article
+        class="fade-up rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-sm transition-colors duration-300 hover:bg-white/[0.07]"
+        [style.animation-delay.ms]="120 + statIndex * 100"
+      >
+        @switch (stat.icon) {
+          @case ('award') {
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              class="mx-auto mb-3 h-6 w-6"
+              [class]="'mx-auto mb-3 h-6 w-6 ' + stat.colorClass"
+            >
+              <circle cx="12" cy="8" r="6"></circle>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m8 14 1.5 7L12 19l2.5 2 1.5-7"
+              ></path>
+            </svg>
+          }
+          @case ('clock') {
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              class="mx-auto mb-3 h-6 w-6"
+              [class]="'mx-auto mb-3 h-6 w-6 ' + stat.colorClass"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"></path>
+            </svg>
+          }
+          @default {
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              class="mx-auto mb-3 h-6 w-6"
+              [class]="'mx-auto mb-3 h-6 w-6 ' + stat.colorClass"
+            >
+              <rect x="3" y="3" width="8" height="8" rx="1"></rect>
+              <rect x="13" y="3" width="8" height="8" rx="1"></rect>
+              <rect x="3" y="13" width="8" height="8" rx="1"></rect>
+              <rect x="13" y="13" width="8" height="8" rx="1"></rect>
+            </svg>
+          }
+        }
+
+        <p class="mb-1 text-sm text-gray-400">{{ stat.label }}</p>
+        <p class="text-3xl font-bold text-white">{{ stat.value }}</p>
+      </article>
+    }
+  </div>
+
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    @for (course of courses; track course.title; let index = $index) {
+      <article
+        class="course-card flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.07]"
+        [style.animation-delay.ms]="220 + index * 100"
+        [class.course-card-completed]="course.status === 'Concluido'"
+        [class.course-card-in-progress]="course.status !== 'Concluido'"
+      >
+        <div class="flex-1 p-6">
+          <div class="mb-4 flex items-center justify-between gap-4">
+            <span
+              class="status-badge inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium"
+              [class.bg-teal-500/20]="course.status === 'Concluido'"
+              [class.text-teal-400]="course.status === 'Concluido'"
+              [class.border-teal-500/30]="course.status === 'Concluido'"
+              [class.bg-amber-500/20]="course.status !== 'Concluido'"
+              [class.text-amber-400]="course.status !== 'Concluido'"
+              [class.border-amber-500/30]="course.status !== 'Concluido'"
+              [class.status-pulse]="course.status !== 'Concluido'"
+            >
+              @if (course.status === 'Concluido') {
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  class="h-3 w-3"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20 6 9 17l-5-5"></path>
+                </svg>
+              } @else {
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  class="spinner h-3 w-3"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21 12a9 9 0 1 1-9-9"
+                  ></path>
+                </svg>
+              }
+              {{ course.status }}
+            </span>
+            <span class="text-xs text-gray-500">{{ course.hours }}</span>
+          </div>
+
+          <h3 class="mb-2 font-semibold leading-tight text-white">{{ course.title }}</h3>
+          <p class="mb-1 text-sm text-teal-400">{{ course.provider }}</p>
+          <p class="mb-4 text-xs text-gray-500">{{ course.year }}</p>
+          <p class="text-sm leading-relaxed text-gray-400">{{ course.description }}</p>
+        </div>
+
+        @if (course.certificate) {
+          <div class="px-6 pb-6">
+            @if (course.certificateUrl) {
+              <a
+                [href]="course.certificateUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex w-full items-center justify-center gap-2 rounded-md border border-white/20 bg-white/5 px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:bg-white hover:text-black"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  class="h-4 w-4"
+                >
+                  <circle cx="12" cy="8" r="6"></circle>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m8 14 1.5 7L12 19l2.5 2 1.5-7"
+                  ></path>
+                </svg>
+                Ver Certificado
+              </a>
+            } @else {
+              <button
+                type="button"
+                disabled
+                class="inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-md border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-gray-400"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  class="h-4 w-4"
+                >
+                  <circle cx="12" cy="8" r="6"></circle>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m8 14 1.5 7L12 19l2.5 2 1.5-7"
+                  ></path>
+                </svg>
+                Certificado indisponivel
+              </button>
+            }
+          </div>
+        }
+      </article>
+    }
+  </div>
+</section>
