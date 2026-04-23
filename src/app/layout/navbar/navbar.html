@@ -1,1 +1,71 @@
+<header class="relative z-50 w-full pt-4 sm:pt-5 md:fixed md:inset-x-0 md:top-0 md:pt-7">
+  <!-- Logo behavior:
+       - mobile/tablet: normal flow (prevents overlay over content)
+       - desktop+: fixed placement for layout parity with design -->
+  <a
+    href="#home"
+    aria-label="Ir para a Home"
+    class="relative z-60 mx-4 block w-fit sm:mx-6 md:fixed md:left-8 md:top-4 lg:left-10 lg:top-5"
+  >
+    <img
+      src="/images/logo/logoSigla.svg"
+      alt="Logo do portfólio"
+      class="h-9 w-auto brightness-0 invert sm:h-11 md:h-14 lg:h-16"
+    />
+  </a>
 
+  <nav class="hidden md:block" aria-label="Navegação principal">
+    <!-- Desktop navbar centered using absolute + translateX(-50%). -->
+    <div
+      class="absolute left-1/2 top-6 -translate-x-1/2 rounded-full border border-white/10 bg-white/5 p-2 backdrop-blur-xl"
+    >
+      <div class="flex items-center gap-1">
+        @for (item of navItems; track item.hash) {
+          <a
+            href="{{ '#' + item.hash }}"
+            [class.rounded-full]="true"
+            [class.bg-white]="currentSection() === item.hash"
+            [class.text-black]="currentSection() === item.hash"
+            [class.text-slate-300]="currentSection() !== item.hash"
+            [class.px-3]="true"
+            [class.lg:px-4]="true"
+            [class.py-2]="true"
+            [class.text-xs]="true"
+            [class.lg:text-sm]="true"
+            [class.whitespace-nowrap]="true"
+            [class.font-medium]="true"
+            [class.transition-all]="true"
+            [class.duration-300]="true"
+            [class.hover:bg-white/10]="currentSection() !== item.hash"
+            [class.hover:text-white]="currentSection() !== item.hash"
+          >
+            {{ item.label }}
+          </a>
+        }
+      </div>
+    </div>
+  </nav>
+
+  <nav
+    class="mx-auto mt-3 w-full max-w-7xl px-3 sm:mt-4 sm:px-4 md:hidden"
+    aria-label="Navegação mobile"
+  >
+    <!-- Mobile navbar wraps items across lines so labels stay visible on narrow screens. -->
+    <div
+      class="flex flex-wrap justify-center gap-2 rounded-2xl border border-white/10 bg-black/40 p-3 backdrop-blur-xl"
+    >
+      @for (item of navItems; track item.hash) {
+        <a
+          href="{{ '#' + item.hash }}"
+          class="w-[calc(50%-0.25rem)] shrink-0 px-2.5 py-1.5 text-[11px] whitespace-nowrap text-center transition-colors sm:w-auto"
+          [class.rounded-full]="true"
+          [class.bg-white]="currentSection() === item.hash"
+          [class.text-black]="currentSection() === item.hash"
+          [class.text-slate-200]="currentSection() !== item.hash"
+        >
+          {{ item.label }}
+        </a>
+      }
+    </div>
+  </nav>
+</header>
