@@ -1,0 +1,62 @@
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInSideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 520ms ease-out forwards;
+}
+
+.timeline-item {
+  opacity: 0;
+  animation: fadeInSideLeft 500ms ease-out forwards;
+}
+
+.formation-card {
+  will-change: transform;
+}
+
+.formation-card:hover {
+  transform: translateY(-4px);
+}
+
+@media (min-width: 768px) {
+  .timeline-item.md\:flex-row-reverse {
+    animation-name: fadeInSideLeft;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .timeline-item {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .formation-card {
+    transition: none;
+  }
+
+  .formation-card:hover {
+    transform: none;
+  }
+}
