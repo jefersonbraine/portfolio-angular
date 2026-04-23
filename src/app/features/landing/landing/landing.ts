@@ -75,8 +75,8 @@ export class Landing implements OnInit, OnDestroy {
     }
 
     // Accessibility + device safety gate for parallax.
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+    const prefersReducedMotion = this.matchesMedia('(prefers-reduced-motion: reduce)');
+    const hasFinePointer = this.matchesMedia('(pointer: fine)');
     this.isParallaxEnabled = !prefersReducedMotion && hasFinePointer;
 
     this.syncSectionFromHash();
@@ -121,5 +121,13 @@ export class Landing implements OnInit, OnDestroy {
 
   private isValidSection(value: string): value is SectionKey {
     return value in this.sectionTitles;
+  }
+
+  private matchesMedia(query: string): boolean {
+    if (typeof window.matchMedia !== 'function') {
+      return false;
+    }
+
+    return window.matchMedia(query).matches;
   }
 }
