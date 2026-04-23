@@ -1,0 +1,167 @@
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes certShineSweep {
+  from {
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  to {
+    transform: translateX(230%) skewX(-18deg);
+  }
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.24);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(251, 191, 36, 0);
+  }
+}
+
+@keyframes certFocusPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.45);
+  }
+  100% {
+    box-shadow: 0 0 0 7px rgba(45, 212, 191, 0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 520ms ease-out forwards;
+}
+
+.course-card {
+  opacity: 0;
+  animation: fadeUp 520ms ease-out forwards;
+  will-change: transform;
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
+}
+
+.course-card-completed:hover {
+  border-color: rgba(45, 212, 191, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(45, 212, 191, 0.12),
+    0 16px 32px -18px rgba(20, 184, 166, 0.45);
+}
+
+.course-card-in-progress:hover {
+  border-color: rgba(251, 191, 36, 0.38);
+  box-shadow:
+    0 0 0 1px rgba(251, 191, 36, 0.12),
+    0 16px 32px -18px rgba(251, 191, 36, 0.5);
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+.status-pulse {
+  animation: statusPulse 1.8s ease-in-out infinite;
+}
+
+.cert-link {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.cert-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 36%;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-130%) skewX(-18deg);
+}
+
+.cert-link:hover::after,
+.cert-link:focus-visible::after {
+  animation: certShineSweep 620ms ease;
+}
+
+.cert-link-icon {
+  transition: transform 220ms ease;
+}
+
+.cert-link:hover .cert-link-icon,
+.cert-link:focus-visible .cert-link-icon {
+  transform: translate(2px, -2px);
+}
+
+.cert-link:focus-visible {
+  outline: 2px solid rgba(45, 212, 191, 0.9);
+  outline-offset: 2px;
+  animation: certFocusPulse 620ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .course-card {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+
+  .status-pulse {
+    animation: none;
+  }
+
+  .cert-link::after {
+    display: none;
+  }
+
+  .cert-link-icon {
+    transition: none;
+  }
+
+  .cert-link:focus-visible {
+    animation: none;
+  }
+
+  .cert-link:hover .cert-link-icon,
+  .cert-link:focus-visible .cert-link-icon {
+    transform: none;
+  }
+
+  .course-card {
+    transition: none;
+  }
+
+  .course-card:hover {
+    transform: none;
+  }
+}
