@@ -1,1 +1,65 @@
-<p>formacao works!</p>
+<section class="mx-auto w-full max-w-4xl pb-6 pt-3 sm:pt-6">
+  <header class="fade-up text-center" [style.animation-delay.ms]="50">
+    <h1 class="text-4xl font-bold text-white md:text-5xl">Formação Acadêmica</h1>
+    <p class="mt-4 text-gray-400">Minha jornada educacional e desenvolvimento profissional</p>
+  </header>
+
+  <div class="relative mt-12 sm:mt-16">
+    <div
+      class="absolute bottom-0 left-8 top-0 w-0.5 bg-linear-to-b from-teal-500/50 via-violet-500/50 to-amber-500/50 md:left-1/2 md:-translate-x-px"
+    ></div>
+
+    @for (item of educationData; track item.title; let index = $index) {
+      <article
+        class="timeline-item relative mb-12 flex items-start gap-8"
+        [style.animation-delay.ms]="120 + index * 150"
+        [class.md:flex-row-reverse]="index % 2 !== 0"
+      >
+        <div class="absolute left-4 z-10 md:left-1/2 md:-translate-x-1/2">
+          <div
+            class="flex h-8 w-12 items-center justify-center rounded-full text-xs font-bold"
+            [class.bg-teal-500]="item.current"
+            [class.text-black]="item.current"
+            [class.bg-white/10]="!item.current"
+            [class.text-white]="!item.current"
+            [class.border]="!item.current"
+            [class.border-white/20]="!item.current"
+          >
+            {{ item.year }}
+          </div>
+        </div>
+
+        <div
+          class="ml-20 md:ml-0 md:w-[calc(50%-40px)]"
+          [class.md:pr-8]="index % 2 === 0"
+          [class.md:pl-8]="index % 2 !== 0"
+        >
+          <div
+            class="formation-card rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.07]"
+          >
+            <div class="mb-3 flex items-start justify-between gap-4">
+              <h3 class="text-lg font-semibold text-white">{{ item.title }}</h3>
+              <span class="shrink-0 whitespace-nowrap text-xs text-gray-500">{{
+                item.period
+              }}</span>
+            </div>
+            <p class="mb-3 text-sm text-teal-400">{{ item.institution }}</p>
+            <p class="text-sm leading-relaxed text-gray-400">{{ item.description }}</p>
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+
+  <div class="mt-12 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-3">
+    @for (stat of stats; track stat.label; let statIndex = $index) {
+      <article
+        class="fade-up rounded-xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-sm transition-colors duration-300 hover:bg-white/[0.07]"
+        [style.animation-delay.ms]="650 + statIndex * 100"
+      >
+        <p class="mb-2 text-sm text-gray-400">{{ stat.label }}</p>
+        <p class="text-2xl font-bold text-white">{{ stat.value }}</p>
+      </article>
+    }
+  </div>
+</section>
