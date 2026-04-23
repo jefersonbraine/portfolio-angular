@@ -1,26 +1,43 @@
-<app-navbar [currentSection]="activeSection()" />
+<!-- Parallax CSS variables. Values come from landing.ts signals. -->
+<div
+  class="landing-shell flex min-h-dvh flex-col overflow-x-hidden bg-[#0a0a0a] text-white"
+  [style.--parallax-x.px]="parallaxX()"
+  [style.--parallax-y.px]="parallaxY()"
+>
+  <!-- Decorative background layers: grid + two glow orbs. -->
+  <div class="background-grid"></div>
+  <div class="orb orb-top"></div>
+  <div class="orb orb-bottom"></div>
 
-<main>
-  @switch (activeSection()) {
-    @case ('home') {
-      <app-home />
-    }
-    @case ('formacao') {
-      <app-formacao />
-    }
-    @case ('cursos') {
-      <app-cursos />
-    }
-    @case ('projetos') {
-      <app-projetos />
-    }
-    @case ('sobre-mim') {
-      <app-sobre-mim />
-    }
-    @case ('contato') {
-      <app-contato />
-    }
-  }
-</main>
+  <app-navbar [currentSection]="activeSection()" />
 
-<app-footer />
+  <!-- Main spacing by breakpoint:
+      - mobile: pt-6/8 because mobile navbar is in normal flow
+      - desktop: larger top padding because navbar is fixed -->
+  <main
+    class="relative z-10 mx-auto w-full max-w-7xl flex-1 px-4 pb-4 pt-6 sm:pt-8 md:px-6 md:pt-30 lg:px-8 lg:pt-28"
+  >
+    @switch (activeSection()) {
+      @case ('home') {
+        <app-home />
+      }
+      @case ('formacao') {
+        <app-formacao />
+      }
+      @case ('cursos') {
+        <app-cursos />
+      }
+      @case ('projetos') {
+        <app-projetos />
+      }
+      @case ('sobre-mim') {
+        <app-sobre-mim />
+      }
+      @case ('contato') {
+        <app-contato />
+      }
+    }
+  </main>
+
+  <app-footer />
+</div>

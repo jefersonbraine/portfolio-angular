@@ -23,8 +23,15 @@ export class Landing implements OnInit, OnDestroy {
   private readonly title = inject(Title);
   private readonly platformId = inject(PLATFORM_ID);
 
+  // Controls which section is visible in the SPA shell.
   protected readonly activeSection = signal<SectionKey>('home');
+  // CSS parallax offsets (in pixels). These are bound as custom properties in landing.html.
+  // To increase/decrease background movement intensity globally, prefer adjusting maxShift below.
+  protected readonly parallaxX = signal(0);
+  protected readonly parallaxY = signal(0);
   private hasVisitedOtherSection = false;
+  // Parallax is enabled only for desktop-like pointers and when reduced-motion is not requested.
+  private isParallaxEnabled = false;
 
   private readonly sectionTitles: Record<SectionKey, string> = {
     home: 'Home | Meu portfólio',
@@ -39,13 +46,43 @@ export class Landing implements OnInit, OnDestroy {
     this.syncSectionFromHash();
   };
 
+  private readonly handlePointerMove = (event: MouseEvent): void => {
+    if (!this.isParallaxEnabled) {
+      return;
+    }
+
+    // Pointer delta normalized to viewport center.
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    const offsetX = (event.clientX - centerX) / centerX;
+    const offsetY = (event.clientY - centerY) / centerY;
+    // Main parallax strength knob.
+    // Raise for stronger movement, reduce for subtler motion.
+    const maxShift = 14;
+
+    this.parallaxX.set(offsetX * maxShift);
+    this.parallaxY.set(offsetY * maxShift);
+  };
+
+  private readonly handlePointerLeave = (): void => {
+    this.parallaxX.set(0);
+    this.parallaxY.set(0);
+  };
+
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
 
+    // Accessibility + device safety gate for parallax.
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+    this.isParallaxEnabled = !prefersReducedMotion && hasFinePointer;
+
     this.syncSectionFromHash();
     window.addEventListener('hashchange', this.handleHashChange);
+    window.addEventListener('mousemove', this.handlePointerMove, { passive: true });
+    window.addEventListener('mouseleave', this.handlePointerLeave, { passive: true });
   }
 
   ngOnDestroy(): void {
@@ -54,9 +91,12 @@ export class Landing implements OnInit, OnDestroy {
     }
 
     window.removeEventListener('hashchange', this.handleHashChange);
+    window.removeEventListener('mousemove', this.handlePointerMove);
+    window.removeEventListener('mouseleave', this.handlePointerLeave);
   }
 
   private syncSectionFromHash(): void {
+    // Keeps routing based on URL hash (e.g. #home, #cursos) and updates title accordingly.
     const hash = window.location.hash.replace('#', '') as SectionKey;
     const section = this.isValidSection(hash) ? hash : 'home';
 

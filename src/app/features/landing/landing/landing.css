@@ -1,0 +1,83 @@
+/* Base grid drift animation (ambient background motion). */
+@keyframes gridMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 60px 60px;
+  }
+}
+
+.landing-shell {
+  position: relative;
+}
+
+/* Main background grid layer.
+   Tune these for grid feel:
+   - background-size: cell size
+   - rgba alpha in background-image: line intensity
+   - animation duration: movement speed */
+.background-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridMove 8s linear infinite;
+  transform: translate3d(
+    calc(var(--parallax-x, 0px) * -0.16),
+    calc(var(--parallax-y, 0px) * -0.16),
+    0
+  );
+  transition: transform 240ms ease-out;
+}
+
+/* Shared orb settings.
+   Tune width/height + blur for glow size and softness. */
+.orb {
+  position: fixed;
+  width: 24rem;
+  height: 24rem;
+  border-radius: 9999px;
+  pointer-events: none;
+  filter: blur(72px);
+  transition: transform 280ms ease-out;
+}
+
+/* Top orb color and parallax factor.
+  Increase multiplier for stronger independent movement. */
+.orb-top {
+  top: 0;
+  left: 20%;
+  background: rgba(124, 58, 237, 0.12);
+  transform: translate3d(
+    calc(var(--parallax-x, 0px) * 0.35),
+    calc(var(--parallax-y, 0px) * 0.35),
+    0
+  );
+}
+
+/* Bottom orb color and parallax factor. */
+.orb-bottom {
+  right: 20%;
+  bottom: 0;
+  background: rgba(13, 148, 136, 0.12);
+  transform: translate3d(
+    calc(var(--parallax-x, 0px) * -0.28),
+    calc(var(--parallax-y, 0px) * -0.28),
+    0
+  );
+}
+
+/* Accessibility fallback for users who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+  .background-grid,
+  .orb,
+  .orb-top,
+  .orb-bottom {
+    transition: none;
+    transform: none;
+  }
+}

@@ -1,0 +1,175 @@
+/* =========================
+  Home load-in animations
+  ========================= */
+@keyframes loadUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes cardLoad {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Generic staged reveal class for headline, text, CTA and grid wrapper. */
+.load-up {
+  opacity: 0;
+  animation: loadUp 620ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Delay tokens used in home.html to control entrance order. */
+.load-delay-1 {
+  animation-delay: 100ms;
+}
+
+.load-delay-2 {
+  animation-delay: 220ms;
+}
+
+.load-delay-3 {
+  animation-delay: 340ms;
+}
+
+.load-delay-4 {
+  animation-delay: 460ms;
+}
+
+/* Card-specific load behavior (slightly different from regular load-up). */
+.card-tile.load-up {
+  animation-name: cardLoad;
+  animation-duration: 700ms;
+}
+
+/* =========================
+  CTA button animations
+  ========================= */
+@keyframes arrowNudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes ctaShine {
+  0% {
+    transform: translateX(-180%) skewX(-20deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.2;
+  }
+  60% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: translateX(540%) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+/* CTA hover lift + warm glow. */
+.contact-cta {
+  transform: translateZ(0);
+}
+
+.contact-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(245, 158, 11, 0.2);
+}
+
+/* Moving highlight strip over CTA on hover. */
+.contact-cta .cta-shine {
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+}
+
+.contact-cta:hover .cta-shine {
+  animation: ctaShine 900ms ease-out 1;
+}
+
+/* Arrow micro-interaction. */
+.group:hover .contact-arrow svg {
+  animation: arrowNudge 0.8s ease-in-out infinite;
+}
+
+/* =========================
+  Card hover animations
+  ========================= */
+@keyframes cardShine {
+  0% {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(220%) skewX(-18deg);
+  }
+}
+
+/* GPU hint for smoother transform animation. */
+.card-tile {
+  transform: translateZ(0);
+}
+
+/* Main hover depth effect. */
+.group:hover .card-tile {
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+/* Icon glow on card hover. */
+.card-icon {
+  transition: filter 300ms ease-out;
+}
+
+.group:hover .card-icon {
+  filter: drop-shadow(0 0 6px currentColor) drop-shadow(0 0 18px currentColor);
+}
+
+/* Shine sweep overlay on card hover. */
+.group:hover .card-shine {
+  opacity: 1;
+  animation: cardShine 0.9s ease-out 1;
+}
+
+/* Accessibility: disable animations for reduced-motion users. */
+@media (prefers-reduced-motion: reduce) {
+  .load-up,
+  .card-tile.load-up {
+    opacity: 1;
+    animation: none;
+  }
+
+  .group:hover .contact-arrow svg,
+  .group:hover .card-shine {
+    animation: none;
+  }
+
+  .contact-cta:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .contact-cta:hover .cta-shine {
+    animation: none;
+  }
+}
