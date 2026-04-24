@@ -7,7 +7,7 @@
   <div class="mb-12 grid grid-cols-1 gap-4 sm:grid-cols-3">
     @for (stat of stats; track stat.label; let statIndex = $index) {
       <article
-        class="fade-up rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-sm transition-colors duration-300 hover:bg-white/[0.07]"
+        class="fade-up rounded-2xl border border-white/10 bg-white/5 p-6 text-center transition-colors duration-300 hover:bg-white/[0.07]"
         [style.animation-delay.ms]="120 + statIndex * 100"
       >
         @switch (stat.icon) {
@@ -67,7 +67,7 @@
   <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
     @for (course of courses; track course.title; let index = $index) {
       <article
-        class="course-card flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.07]"
+        class="course-card flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition-all duration-300 hover:bg-white/[0.07]"
         [style.animation-delay.ms]="220 + index * 100"
         [class.course-card-completed]="course.status === 'Concluido'"
         [class.course-card-in-progress]="course.status !== 'Concluido'"

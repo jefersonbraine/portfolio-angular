@@ -1,9 +1,13 @@
+<!-- Home section container.
+     min-h keeps this screen visually full-height while still allowing content growth. -->
 <section class="mx-auto flex min-h-[calc(100dvh-16rem)] w-full max-w-7xl flex-col justify-center">
   <!-- Hero block: headline + intro + CTA -->
   <div
     class="mb-10 flex flex-col items-start justify-between gap-9 sm:mb-12 sm:gap-10 lg:mb-16 lg:flex-row lg:gap-12"
   >
+    <!-- Left hero column: title and introductory copy. -->
     <div class="w-full flex-1">
+      <!-- Main visual headline with gradient text treatment. -->
       <h1 class="text-[clamp(2.3rem,11vw,7.5rem)] font-bold leading-[0.95] tracking-tight">
         <!-- load-delay-* classes control staged entrance order -->
         <span
@@ -19,6 +23,8 @@
         </span>
       </h1>
 
+      <!-- Intro paragraph.
+           Accent spans highlight key words to improve scannability. -->
       <p
         class="load-up load-delay-3 mt-6 max-w-xl text-base leading-relaxed text-gray-400 sm:mt-7 sm:text-lg"
       >
@@ -29,13 +35,17 @@
       </p>
     </div>
 
+    <!-- Right hero column: primary CTA to contact section. -->
     <div class="w-full lg:mt-8 lg:w-auto">
       <!-- contact-cta drives hover lift/glow/shine (see home.css). -->
+      <!-- Uses hash navigation so Landing can switch section without full page reload. -->
       <a
         href="#contato"
         class="contact-cta load-up load-delay-4 group relative isolate flex w-full items-center justify-between gap-4 overflow-hidden rounded-full border border-amber-500/40 bg-linear-to-r from-amber-500/20 to-amber-600/10 px-6 py-3.5 text-amber-300 transition-all duration-300 hover:from-amber-500/30 hover:to-amber-600/20 sm:w-auto sm:px-8 sm:py-3.8"
       >
+        <!-- CTA text label. -->
         <span class="relative z-10 text-base font-medium sm:text-lg">Entrar em contato</span>
+        <!-- Circular icon container animated on group hover. -->
         <span
           class="contact-arrow relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-amber-500/50 transition-colors group-hover:bg-amber-500/20 sm:h-10 sm:w-10"
         >
@@ -49,6 +59,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7" />
           </svg>
         </span>
+        <!-- Decorative sweep highlight animated on hover in CSS. -->
         <span class="cta-shine pointer-events-none absolute inset-y-0 left-0 w-20"></span>
       </a>
     </div>
@@ -56,10 +67,14 @@
 
   <!-- Card grid block: cards also animate in with stagger via $index delay. -->
   <div class="load-up load-delay-4 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
+    <!-- Native Angular control flow.
+         track by hash avoids unnecessary DOM re-renders. -->
     @for (card of cards; track card.hash) {
+      <!-- Whole card is clickable and navigates by hash to corresponding section. -->
       <a href="{{ '#' + card.hash }}">
         <!-- card-tile + card-shine + card-icon behavior are configured in home.css -->
         <!-- Stagger: each next card enters 100ms after previous card -->
+        <!-- Dynamic color theme per card type (About card). -->
         <article
           class="load-up card-tile group relative flex h-full min-h-36 cursor-pointer flex-col justify-between overflow-hidden rounded-xl border bg-linear-to-br p-4 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl sm:min-h-40 sm:rounded-2xl sm:p-6"
           [style.animation-delay.ms]="550 + $index * 100"
@@ -84,8 +99,10 @@
             [class.text-amber-400]="card.hash === 'projetos'"
             [class.text-rose-400]="card.hash === 'sobre-mim'"
           >
+            <!-- Icon switches by destination section for quick visual recognition. -->
             @switch (card.hash) {
               @case ('formacao') {
+                <!-- Graduation cap icon for education section. -->
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -106,6 +123,7 @@
                 </svg>
               }
               @case ('cursos') {
+                <!-- Code brackets icon for continuous learning/courses. -->
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -118,6 +136,7 @@
                 </svg>
               }
               @case ('projetos') {
+                <!-- Globe icon for public project portfolio. -->
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -135,6 +154,7 @@
                 </svg>
               }
               @case ('sobre-mim') {
+                <!-- User icon for about/profile section. -->
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -152,6 +172,7 @@
               }
             }
           </div>
+          <!-- Text content block for title + subtitle. -->
           <div>
             <h3 class="mb-1 text-base font-semibold text-white sm:text-lg">{{ card.title }}</h3>
             <p class="text-sm text-gray-400">{{ card.subtitle }}</p>

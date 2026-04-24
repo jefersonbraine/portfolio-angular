@@ -1,6 +1,8 @@
 /* =========================
   Home load-in animations
   ========================= */
+/* Base enter animation for hero elements.
+   Includes blur reduction for a softer appearance on load. */
 @keyframes loadUp {
   from {
     opacity: 0;
@@ -14,6 +16,8 @@
   }
 }
 
+/* Enter animation variant used specifically by cards.
+  Slight scale effect helps cards feel heavier than text elements. */
 @keyframes cardLoad {
   from {
     opacity: 0;
@@ -32,18 +36,22 @@
 }
 
 /* Delay tokens used in home.html to control entrance order. */
+/* Headline first line appears first. */
 .load-delay-1 {
   animation-delay: 100ms;
 }
 
+/* Headline second line appears second. */
 .load-delay-2 {
   animation-delay: 220ms;
 }
 
+/* Intro paragraph appears after title. */
 .load-delay-3 {
   animation-delay: 340ms;
 }
 
+/* CTA and cards wrapper appear last in hero sequence. */
 .load-delay-4 {
   animation-delay: 460ms;
 }
@@ -57,6 +65,7 @@
 /* =========================
   CTA button animations
   ========================= */
+/* Arrow horizontal pulse shown while CTA is hovered. */
 @keyframes arrowNudge {
   0%,
   100% {
@@ -67,6 +76,7 @@
   }
 }
 
+/* Shine sweep animation for CTA overlay strip. */
 @keyframes ctaShine {
   0% {
     transform: translateX(-180%) skewX(-20deg);
@@ -86,16 +96,19 @@
 
 /* CTA hover lift + warm glow. */
 .contact-cta {
+  /* translateZ nudges browser to GPU compositing for smoother transform. */
   transform: translateZ(0);
 }
 
 .contact-cta:hover {
+  /* Small lift to show interactivity without causing layout shift. */
   transform: translateY(-2px);
   box-shadow: 0 14px 36px rgba(245, 158, 11, 0.2);
 }
 
 /* Moving highlight strip over CTA on hover. */
 .contact-cta .cta-shine {
+  /* Transparent-to-bright-to-transparent gradient creates moving light effect. */
   background: linear-gradient(
     110deg,
     transparent 0%,
@@ -106,17 +119,20 @@
 }
 
 .contact-cta:hover .cta-shine {
+  /* Run once per hover, not infinite. */
   animation: ctaShine 900ms ease-out 1;
 }
 
 /* Arrow micro-interaction. */
 .group:hover .contact-arrow svg {
+  /* Infinite while hovered keeps icon feeling alive. */
   animation: arrowNudge 0.8s ease-in-out infinite;
 }
 
 /* =========================
   Card hover animations
   ========================= */
+/* Shine pass animation for cards overlay layer. */
 @keyframes cardShine {
   0% {
     transform: translateX(-120%) skewX(-18deg);
@@ -133,37 +149,44 @@
 
 /* Main hover depth effect. */
 .group:hover .card-tile {
+  /* Deep soft shadow to separate hovered card from background. */
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
 }
 
 /* Icon glow on card hover. */
 .card-icon {
+  /* Transition only filter to avoid unnecessary property animations. */
   transition: filter 300ms ease-out;
 }
 
 .group:hover .card-icon {
+  /* Layered glow creates richer neon effect than a single shadow. */
   filter: drop-shadow(0 0 6px currentColor) drop-shadow(0 0 18px currentColor);
 }
 
 /* Shine sweep overlay on card hover. */
 .group:hover .card-shine {
   opacity: 1;
+  /* One-time sweep each hover entry. */
   animation: cardShine 0.9s ease-out 1;
 }
 
 /* Accessibility: disable animations for reduced-motion users. */
 @media (prefers-reduced-motion: reduce) {
+  /* Force content visible immediately when motion is reduced. */
   .load-up,
   .card-tile.load-up {
     opacity: 1;
     animation: none;
   }
 
+  /* Disable ongoing effects that can distract motion-sensitive users. */
   .group:hover .contact-arrow svg,
   .group:hover .card-shine {
     animation: none;
   }
 
+  /* Remove motion transforms and shadows for CTA in reduced-motion mode. */
   .contact-cta:hover {
     transform: none;
     box-shadow: none;
