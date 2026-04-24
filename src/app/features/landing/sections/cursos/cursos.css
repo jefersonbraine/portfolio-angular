@@ -51,6 +51,14 @@
   animation: fadeUp 520ms ease-out forwards;
 }
 
+/* Shared glass surface used by stats and course cards.
+   The blur stays light to keep the background from flickering too much. */
+.fade-up,
+.course-card {
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
 .course-card {
   opacity: 0;
   animation: fadeUp 520ms ease-out forwards;

@@ -1,0 +1,278 @@
+/* Entry animation for elements that move upward into place. */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Entry animation for left-column cards. */
+@keyframes fadeLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Entry animation for right-column cards. */
+@keyframes fadeRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Very subtle moving sheen for card backgrounds.
+   Runs slowly to add depth without distracting motion. */
+@keyframes panelShimmer {
+  0% {
+    background-position: -220% 0;
+    opacity: 0.03;
+  }
+  50% {
+    opacity: 0.055;
+  }
+  100% {
+    background-position: 220% 0;
+    opacity: 0.03;
+  }
+}
+
+/* Staggered scale+fade reveal for technical skill chips. */
+@keyframes chipPop {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Shared helper class used by header and generic blocks. */
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 520ms ease-out forwards;
+}
+
+/* Left-side animated reveal class. */
+.fade-left {
+  opacity: 0;
+  animation: fadeLeft 520ms ease-out forwards;
+}
+
+/* Right-side animated reveal class. */
+.fade-right {
+  opacity: 0;
+  animation: fadeRight 520ms ease-out forwards;
+}
+
+/* Base glassmorphism panel style reused by all section cards. */
+.panel-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Match the Design palette more closely without reintroducing backdrop blur. */
+  background: rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  transition: background-color 260ms ease;
+}
+
+.panel-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.02;
+  background: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.01) 42%,
+    rgba(255, 255, 255, 0.06) 50%,
+    rgba(255, 255, 255, 0.01) 58%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 250% 100%;
+  background-position: -220% 0;
+  filter: blur(14px);
+  animation: panelShimmer 18s ease-in-out infinite;
+}
+
+.panel-card:hover {
+  /* Subtle brightness increase to indicate hover without changing layout. */
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* Keep content above shimmer pseudo-element. */
+.panel-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Avatar wrapper kept for structure; ring gradient intentionally disabled. */
+.avatar-ring {
+  position: relative;
+  border-radius: 9999px;
+  padding: 0;
+}
+
+.avatar-shell {
+  position: relative;
+  z-index: 1;
+}
+
+.avatar-image {
+  transition: transform 320ms ease;
+}
+
+/* Requested micro parallax + premium ring animation on interaction. */
+.profile-card:hover .avatar-image,
+.profile-card:focus-within .avatar-image {
+  transform: translate3d(3px, -3px, 0) scale(1.025);
+}
+
+/* Icon-only contact button style in profile card. */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.25rem;
+  width: 2.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgb(209 213 219);
+  transition: all 220ms ease;
+}
+
+.icon-btn:hover,
+.icon-btn:focus-visible {
+  /* High-contrast state improves keyboard and mouse discoverability. */
+  background: #ffffff;
+  color: #000000;
+}
+
+/* Small interest card container. */
+.interest-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.75rem;
+}
+
+/* Skill tags pop in sequence to increase perceived richness of the stack. */
+.skills-card .skill-chip {
+  opacity: 0;
+  animation: chipPop 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.skills-card .skill-chip:nth-child(1) {
+  animation-delay: 230ms;
+}
+
+.skills-card .skill-chip:nth-child(2) {
+  animation-delay: 300ms;
+}
+
+.skills-card .skill-chip:nth-child(3) {
+  animation-delay: 370ms;
+}
+
+.skills-card .skill-chip:nth-child(4) {
+  animation-delay: 440ms;
+}
+
+.skills-card .skill-chip:nth-child(5) {
+  animation-delay: 510ms;
+}
+
+.skills-card .skill-chip:nth-child(6) {
+  animation-delay: 580ms;
+}
+
+/* Clickable contact row style in final "Vamos conversar" block. */
+.contact-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.75rem;
+  transition: background-color 220ms ease;
+}
+
+.contact-row:hover,
+.contact-row:focus-visible {
+  /* Slightly brighter background for interaction feedback. */
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Right-side external link icon transition. */
+.contact-row-icon {
+  transition:
+    color 220ms ease,
+    transform 220ms ease;
+}
+
+.contact-row:hover .contact-row-icon,
+.contact-row:focus-visible .contact-row-icon {
+  /* Small nudge reinforces that row opens an external destination. */
+  color: #ffffff;
+  transform: translate(1px, -1px);
+}
+
+/* Accessibility: disable motion-heavy transitions for reduced-motion users. */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .fade-left,
+  .fade-right {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .panel-card,
+  .icon-btn,
+  .contact-row,
+  .contact-row-icon {
+    transition: none;
+  }
+
+  .panel-card::before,
+  .skills-card .skill-chip {
+    animation: none;
+  }
+
+  .skills-card .skill-chip {
+    opacity: 1;
+    transform: none;
+  }
+
+  .profile-card:hover .avatar-image,
+  .profile-card:focus-within .avatar-image {
+    transform: none;
+  }
+
+  .contact-row:hover .contact-row-icon,
+  .contact-row:focus-visible .contact-row-icon {
+    transform: none;
+  }
+}
