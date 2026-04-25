@@ -12,11 +12,16 @@
   <div class="grid gap-6 lg:grid-cols-3">
     <!-- Left column: profile card + compact stats. -->
     <div class="space-y-6">
-      <article class="fade-left panel-card profile-card p-6 text-center" [style.animation-delay.ms]="120">
+      <article
+        class="fade-left panel-card profile-card p-6 text-center"
+        [style.animation-delay.ms]="120"
+      >
         <!-- Profile avatar container.
              ngSrc enables Angular image optimizations and avoids layout shift (fixed width/height). -->
         <div class="avatar-ring mx-auto mb-4 h-32 w-32 rounded-full">
-          <div class="avatar-shell h-full w-full overflow-hidden rounded-full border-4 border-white/10">
+          <div
+            class="avatar-shell h-full w-full overflow-hidden rounded-full border-4 border-white/10"
+          >
             <img
               [ngSrc]="profileImageSrc"
               alt="Foto de perfil"
@@ -57,8 +62,9 @@
           @for (btn of contactButtons; track btn.label) {
             <a
               [href]="btn.href"
-              target="_blank"
-              rel="noopener noreferrer"
+              [attr.target]="isSafeExternalLink(btn.href) ? '_blank' : null"
+              rel="noopener noreferrer nofollow external"
+              referrerpolicy="no-referrer"
               [attr.aria-label]="btn.label"
               class="icon-btn"
             >
@@ -146,9 +152,17 @@
         <h3 class="mb-4 font-semibold text-white">Quem sou eu</h3>
         <div class="space-y-4 text-sm leading-relaxed text-gray-400">
           <p>
-            Sou Jeferson Braine Leal, desenvolvedor de software com mais de 4 anos de experiência em ambientes de alta exigência analítica e gestão de processos. Venho do Direito Notarial — e essa base me tornou um desenvolvedor diferente: preciso que o código funcione de verdade, no mundo real, com dados reais.
+            Sou Jeferson Braine Leal, desenvolvedor de software com mais de 4 anos de experiência em
+            ambientes de alta exigência analítica e gestão de processos. Venho do Direito Notarial —
+            e essa base me tornou um desenvolvedor diferente: preciso que o código funcione de
+            verdade, no mundo real, com dados reais.
+          </p>
+
           <p>
-            Hoje desenvolvo soluções do zero em Python, C#, Angular e TypeScript, com foco em automação de processos, APIs REST e aplicações web. Meu projeto principal, o Tabulion, está em produção real em um cartório — automatizando fluxos documentais que antes eram 100% manuais.
+            Hoje desenvolvo soluções do zero em Python, C#, Angular e TypeScript, com foco em
+            automação de processos, APIs REST e aplicações web. Meu projeto principal, o Tabulion,
+            está em produção real em um cartório — automatizando fluxos documentais que antes eram
+            100% manuais.
           </p>
         </div>
       </article>
@@ -272,7 +286,13 @@
         <div class="space-y-3">
           @for (info of contactInfo; track info.label) {
             <!-- Entire row is clickable and opens external destination in new tab. -->
-            <a [href]="info.href" target="_blank" rel="noopener noreferrer" class="contact-row">
+            <a
+              [href]="info.href"
+              [attr.target]="isSafeExternalLink(info.href) ? '_blank' : null"
+              rel="noopener noreferrer nofollow external"
+              referrerpolicy="no-referrer"
+              class="contact-row"
+            >
               <!-- Left side: icon + contact text. -->
               <div class="flex items-center gap-3">
                 @switch (info.icon) {

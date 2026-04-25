@@ -60,11 +60,21 @@ type ContactInfoItem = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SobreMim {
+  private readonly allowedHosts = new Set([
+    'linkedin.com',
+    'www.linkedin.com',
+    'github.com',
+    'www.github.com',
+    'api.whatsapp.com',
+  ]);
+
+  private readonly allowedProtocols = new Set(['https:', 'mailto:', 'tel:']);
+
   // Local profile image served from /public and optimized via ngSrc.
   protected readonly profileImageSrc = '/images/profile-picture/eu.jpg';
 
   // Circular icon-only shortcuts shown below the profile heading.
-  protected readonly contactButtons: ContactButton[] = [
+  private readonly rawContactButtons: ContactButton[] = [
     {
       icon: 'mail',
       label: 'Email',
@@ -122,7 +132,7 @@ export class SobreMim {
     {
       category: 'Cloud & DevOps',
       skillClass: 'bg-blue-500/15 text-blue-300 border-blue-500/30',
-      skills: ['Oracle', 'Vercel', 'GitHub Actions (CI/CD)', 'Docker',],
+      skills: ['Oracle', 'Vercel', 'GitHub Actions (CI/CD)', 'Docker'],
     },
   ];
 
@@ -151,7 +161,7 @@ export class SobreMim {
   ];
 
   // Contact links rendered as full-width rows in the final card.
-  protected readonly contactInfo: ContactInfoItem[] = [
+  private readonly rawContactInfo: ContactInfoItem[] = [
     {
       icon: 'mail',
       label: 'jefersonbraineleal@gmail.com',
@@ -175,4 +185,44 @@ export class SobreMim {
       external: true,
     },
   ];
+
+  protected readonly contactButtons: ContactButton[] = this.rawContactButtons.map((button) => ({
+    ...button,
+    href: this.sanitizeLink(button.href),
+  }));
+
+  protected readonly contactInfo: ContactInfoItem[] = this.rawContactInfo.map((info) => ({
+    ...info,
+    href: this.sanitizeLink(info.href),
+  }));
+
+  protected isSafeExternalLink(href: string): boolean {
+    return href.startsWith('https://');
+  }
+
+  private sanitizeLink(rawHref: string): string {
+    if (!rawHref) {
+      return '#';
+    }
+
+    if (rawHref.startsWith('mailto:') || rawHref.startsWith('tel:')) {
+      const protocol = rawHref.split(':', 1)[0] + ':';
+      return this.allowedProtocols.has(protocol) ? rawHref : '#';
+    }
+
+    try {
+      const parsed = new URL(rawHref);
+      if (!this.allowedProtocols.has(parsed.protocol)) {
+        return '#';
+      }
+
+      if (parsed.protocol === 'https:' && !this.allowedHosts.has(parsed.hostname.toLowerCase())) {
+        return '#';
+      }
+
+      return parsed.toString();
+    } catch {
+      return '#';
+    }
+  }
 }

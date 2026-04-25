@@ -1,0 +1,292 @@
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shakeX {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-3px);
+  }
+  40% {
+    transform: translateX(3px);
+  }
+  60% {
+    transform: translateX(-2px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes errorFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes successPop {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 520ms ease-out forwards;
+}
+
+.fade-left {
+  opacity: 0;
+  animation: fadeLeft 520ms ease-out forwards;
+}
+
+.fade-right {
+  opacity: 0;
+  animation: fadeRight 520ms ease-out forwards;
+}
+
+.panel-card {
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  transition: background-color 260ms ease;
+}
+
+.panel-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.contact-input {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.6rem 0.75rem;
+  color: #ffffff;
+  transition: border-color 220ms ease;
+}
+
+.contact-input::placeholder {
+  color: rgb(107 114 128);
+}
+
+.contact-input:focus {
+  outline: none;
+  border-color: rgba(20, 184, 166, 0.5);
+}
+
+select.contact-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+select.contact-input option {
+  background-color: #0b1220;
+  color: #f8fafc;
+}
+
+.contact-input.input-invalid {
+  border-color: rgba(239, 68, 68, 0.75);
+}
+
+.contact-input.input-invalid:focus {
+  border-color: rgba(239, 68, 68, 0.95);
+}
+
+.contact-input.input-invalid.input-shake {
+  animation: shakeX 180ms ease-in-out;
+}
+
+.validation-error {
+  color: rgb(248 113 113);
+  font-size: 0.75rem;
+  animation: errorFadeIn 180ms ease-out;
+}
+
+.form-exit {
+  opacity: 0;
+  transform: scale(0.985);
+  transition:
+    opacity 190ms ease,
+    transform 190ms ease;
+}
+
+.success-state {
+  animation: successPop 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.send-btn {
+  border-radius: 0.75rem;
+  background: #ffffff;
+  color: #000000;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 220ms ease,
+    transform 180ms ease,
+    box-shadow 220ms ease;
+}
+
+.send-btn:hover:not(:disabled) {
+  background: #e5e7eb;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+}
+
+.send-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.send-btn-content {
+  transition: transform 180ms ease;
+}
+
+.send-btn:hover:not(:disabled) .send-btn-content {
+  transform: translateY(-0.5px);
+}
+
+.send-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.spinner-loader {
+  height: 1rem;
+  width: 1rem;
+  border-radius: 999px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-top-color: #000000;
+  animation: spin 900ms linear infinite;
+}
+
+.social-btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem 0.9rem;
+  color: #ffffff;
+  font-size: 0.875rem;
+  transition:
+    all 220ms ease,
+    transform 200ms ease;
+}
+
+.social-btn-bloom {
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.28) 0%, rgba(45, 212, 191, 0) 70%);
+  opacity: 0;
+  transform: scale(0.75);
+  transition:
+    opacity 240ms ease,
+    transform 240ms ease;
+  pointer-events: none;
+}
+
+.social-btn:hover,
+.social-btn:focus-visible {
+  background: #ffffff;
+  color: #000000;
+  transform: translateY(-2px);
+}
+
+.social-btn:hover .social-btn-bloom,
+.social-btn:focus-visible .social-btn-bloom {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.social-btn > *:not(.social-btn-bloom) {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .fade-left,
+  .fade-right,
+  .spinner-loader,
+  .contact-input.input-invalid.input-shake,
+  .validation-error,
+  .success-state {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .form-exit {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .panel-card,
+  .contact-input,
+  .send-btn,
+  .social-btn,
+  .send-btn-content,
+  .social-btn-bloom {
+    transition: none;
+  }
+}
