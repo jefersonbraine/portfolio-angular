@@ -71,7 +71,7 @@ export class SobreMim {
   private readonly allowedProtocols = new Set(['https:', 'mailto:', 'tel:']);
 
   // Local profile image served from /public and optimized via ngSrc.
-  protected readonly profileImageSrc = '/images/profile-picture/eu.jpg';
+  protected readonly profileImageSrc = '/assets/profile-picture/eu.jpg';
 
   // Circular icon-only shortcuts shown below the profile heading.
   private readonly rawContactButtons: ContactButton[] = [
