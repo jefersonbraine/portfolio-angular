@@ -1,8 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 
-type ProjectColor = 'teal' | 'violet' | 'amber' | 'rose';
-type ProjectFilter = 'Todos' | 'Web' | 'Full-Stack' | 'Python';
+type ProjectColor = 'teal' | 'violet' | 'amber' | 'rose'; //Cores predefinidas para os projetos, usadas para criar uma identidade visual consistente e facilitar a associação de cada projeto a uma cor específica, melhorando a experiência do usuário e a estética geral da seção de projetos.
+type ProjectFilter = 'Todos' | 'Web' | 'Full-Stack' | 'Python'; //Filtros que os usuários podem usar para filtrar os projetos exibidos, permitindo uma navegação mais personalizada e relevante.
 
+
+// Definição do tipo Project com campos detalhados para cada projeto, incluindo URLs opcionais e lições aprendidas.
+// o Type project obriga que todo projeto tenha um title, image, status e etc, garantindo consistência e completude dos dados.
 type Project = {
   number: string;
   title: string;
@@ -23,25 +26,28 @@ type Project = {
   lessonsLearned: string;
 };
 
-type ColorTokens = {
+type ColorTokens = { //Definição do tipo ColorTokens para mapear as classes CSS relacionadas a cada cor, facilitando a aplicação de estilos consistentes em todo o componente.
   badge: string;
   bar: string;
   hoverAccent: string;
 };
 
-@Component({
+@Component({ // Definição do componente Angular para a seção de projetos, com configuração de seletor, template, estilos e estratégia de detecção de mudanças.
   selector: 'app-projetos',
   imports: [],
   templateUrl: './projetos.html',
   styleUrl: './projetos.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Projetos {
-  private readonly allowedProtocols = new Set(['https:']);
 
-  protected readonly filters: ProjectFilter[] = ['Todos', 'Web', 'Full-Stack', 'Python'];
+
+export class Projetos {
+  private readonly allowedProtocols = new Set(['https:']); //Somente links HTTPS são permitidos para evitar vulnerabilidades de segurança.
+
+  protected readonly filters: ProjectFilter[] = ['Todos', 'Web', 'Full-Stack', 'Python']; // filtros que serão exibidos para o usuário, permitindo que ele selecione a categoria de projetos que deseja ver.
 
   protected readonly colorMap: Record<ProjectColor, ColorTokens> = {
+    // Mapeamento de cores para cada projeto, definindo classes CSS para badge, barra e hoverAccent, garantindo uma identidade visual consistente e fácil de manter.
     teal: {
       badge: 'bg-teal-500/10 text-teal-300 border-teal-500/25',
       bar: 'bg-teal-400',
@@ -64,9 +70,9 @@ export class Projetos {
     },
   };
 
-  protected readonly projects: Project[] = [
+  protected readonly projects: Project[] = [ // Lista de projetos, cada um com detalhes completos, incluindo título, categoria, tecnologias usadas, contexto, solução e lições aprendidas. Essa estrutura detalhada permite que os usuários entendam não apenas o que foi feito, mas também o porquê e o como de cada projeto.
     {
-      number: '01',
+      number: '01', // "id"
       title: 'Portfolio Website',
       category: 'Frontend · Design',
       oneLiner:
@@ -74,15 +80,15 @@ export class Projetos {
       year: '2025',
       status: 'Concluído',
       color: 'teal',
-      filters: ['Web'],
+      filters: ['Web'], // Como que esse projeto vai ser identificado
       technologies: ['HTML', 'CSS', 'JS', 'Figma', 'Vercel'],
       image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80',
       context:
         'A maioria dos portfólios de devs é genérica, baseada em templates prontos, e não consegue transmitir a personalidade do profissional. Criar um portfólio do zero é um desafio que envolve muito mais do que código — é sobre narrativa, identidade e impacto visual.',
       solution:
         'Construí uma SPA com React e Framer Motion focada em micro-interações e performance. Implementei um design system baseado em tokens CSS para garantir consistência visual. A grade animada no background foi feita puramente em CSS, sem impacto na performance. Cada página tem animações de entrada escalonadas para criar uma experiência de leitura fluida.',
-      demoUrl: '#',
-      codeUrl: '#',
+      demoUrl: 'https://jefersonbraineleal.dev',
+      codeUrl: 'https://github.com/jefersonbraine/Portfolio-project',
       videoUrl: null,
       docUrl: null,
       lessonsLearned:
@@ -97,7 +103,7 @@ export class Projetos {
       year: '2025',
       status: 'Concluído',
       color: 'violet',
-      filters: ['Web', 'Full-Stack'],
+      filters: ['Web', 'Full-Stack'], // Vai aparecer quando filtrar por Web ou Full-Stack
       technologies: ['React', 'TypeScript', 'Next.js', 'Tailwind', 'Supabase', 'Stripe'],
       image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80',
       context:
@@ -210,6 +216,8 @@ export class Projetos {
     return this.colorMap[color].badge;
   }
 
+  // auxiliares para o visual
+
   protected getCardTitleClasses(color: ProjectColor): string {
     return 'text-xl font-bold text-white transition-colors ' + this.colorMap[color].hoverAccent;
   }
@@ -221,10 +229,10 @@ export class Projetos {
   protected getFilterButtonClasses(filter: ProjectFilter): string {
     const isActive = this.activeFilter() === filter;
     if (isActive) {
-      return 'rounded-full border px-4 py-1.5 text-xs font-semibold transition-all duration-200 bg-white text-black border-white';
+      return 'rounded-full border px-6 py-1.5 text-xs font-semibold transition-all duration-200 bg-white text-black border-white'; //Como o filtro selecionado irá aparecer, destacando-se dos demais.
     }
 
-    return 'rounded-full border px-4 py-1.5 text-xs font-semibold transition-all duration-200 bg-transparent text-gray-400 border-white/10 hover:border-white/30 hover:text-white';
+    return 'rounded-full border px-4 py-1.5 text-xs font-semibold transition-all duration-200 bg-transparent text-gray-400 border-white/10 hover:border-white/30 hover:text-white'; // Como os filtros não selecionados irão aparecer, com uma aparência mais sutil, mas ainda interativa.
   }
 
   protected getStatusColor(status: Project['status']): string {

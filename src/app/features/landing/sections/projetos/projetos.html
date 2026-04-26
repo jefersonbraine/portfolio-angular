@@ -1,4 +1,4 @@
-<section class="mx-auto w-full max-w-5xl py-2 sm:py-4">
+ <section class="mx-auto w-full max-w-5xl py-2 sm:py-4"> <!-- Container centralizado com largura máxima e espaçamento vertical, garantindo que o conteúdo fique organizado e legível em diferentes tamanhos de tela. -->
   <header class="projects-fade-up mb-12">
     <p class="mb-4 text-xs font-semibold tracking-[0.2em] text-gray-500 uppercase">Portfólio</p>
     <h1 class="mb-4 text-5xl leading-[0.9] font-black tracking-tight md:text-6xl">
@@ -14,6 +14,7 @@
     </p>
   </header>
 
+ <!-- Filtro de projetos com animação de fade-up, ícone e botões para cada categoria de filtro, permitindo que os usuários selecionem a categoria de projetos que desejam visualizar. -->
   <div
     class="projects-fade-up mb-10 flex flex-wrap items-center gap-2"
     [style.animation-delay.ms]="90"
@@ -28,14 +29,17 @@
       <path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18l-7 8v6l-4 2v-8z"></path>
     </svg>
 
+    <!-- Botões de filtro -->
     @for (filter of filters; track filter) {
       <button type="button" (click)="setFilter(filter)" [class]="getFilterButtonClasses(filter)">
         {{ filter }}
       </button>
     }
   </div>
-
+  <!-- Lista de projetos filtrados com animação de fade-up, exibindo cartões para cada projeto que correspondem ao filtro selecionado, permitindo que os usuários vejam detalhes como categoria, ano, status, descrição e tecnologias usadas. -->
   <div class="space-y-4">
+
+    <!-- Loop para exibir os projetos filtrados, onde cada projeto é representado por um cartão interativo que mostra informações relevantes e permite que os usuários cliquem para ver mais detalhes. -->
     @for (project of filteredProjects(); track project.number; let i = $index) {
       <button
         type="button"
@@ -103,7 +107,7 @@
       </button>
     }
   </div>
-
+  <!-- Modal do projeto -->
   @if (selectedProject(); as project) {
     <div
       class="project-modal fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/80 px-4 py-8 backdrop-blur-md"
