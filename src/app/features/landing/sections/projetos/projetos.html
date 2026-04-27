@@ -110,7 +110,7 @@
   <!-- Modal do projeto -->
   @if (selectedProject(); as project) {
     <div
-      class="project-modal fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/80 px-4 py-8 backdrop-blur-md"
+      class="project-modal fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/80 px-4 pb-8 pt-20 backdrop-blur-md sm:pt-24"
       (click)="closeProject()"
     >
       <article
@@ -257,9 +257,7 @@
             </div>
 
             @if (getEmbedUrl(project.videoUrl)) {
-              <div
-                class="aspect-video overflow-hidden rounded-xl border border-white/10 bg-black"
-              >
+              <div class="aspect-video overflow-hidden rounded-xl border border-white/10 bg-black">
                 <iframe
                   [src]="getSafeEmbedUrl(project.videoUrl)"
                   class="h-full w-full"

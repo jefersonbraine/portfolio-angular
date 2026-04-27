@@ -11,7 +11,7 @@ import { Firestore, collection, collectionData, orderBy, query } from '@angular/
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 type ProjectColor = 'teal' | 'violet' | 'amber' | 'rose';
-type ProjectFilter = 'Todos' | 'Web' | 'Full-Stack' | 'Python';
+type ProjectFilter = 'Todos' | 'Web' | 'Full-Stack' | 'Python' | 'Automação' | 'C#';
 
 type Project = {
   id: string;
@@ -60,7 +60,14 @@ export class Projetos implements OnInit {
   private readonly firestore = inject(Firestore);
   private readonly allowedProtocols = new Set(['https:']);
 
-  protected readonly filters: ProjectFilter[] = ['Todos', 'Web', 'Full-Stack', 'Python'];
+  protected readonly filters: ProjectFilter[] = [
+    'Todos',
+    'Web',
+    'Full-Stack',
+    'Python',
+    'Automação',
+    'C#',
+  ];
   protected readonly isLoading = signal(true);
 
   protected readonly colorMap: Record<ProjectColor, ColorTokens> = {
