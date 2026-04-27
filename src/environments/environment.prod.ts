@@ -1,19 +1,19 @@
-// src/environments/environment.prod.ts
+
 export const environment = {
   production: true,
   firebase: {
-    apiKey: '',
-    authDomain: '',
-    projectId: '',
-    storageBucket: '',
-    messagingSenderId: '',
-    appId: '',
-    measurementId: '',
+    apiKey:            'undefined',
+    authDomain:        'undefined',
+    projectId:         'undefined',
+    storageBucket:     'undefined',
+    messagingSenderId: 'undefined',
+    appId:             'undefined',
+    measurementId:     'undefined'
   },
-  adminUid: '',
-  adminPath: '',
+  adminUid:  'undefined',
+  adminPath: 'undefined',
   cloudinary: {
-    cloudName: '',
-    uploadPreset: '',
-  },
+    cloudName:    'undefined',
+    uploadPreset: 'undefined'
+  }
 };
