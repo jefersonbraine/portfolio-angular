@@ -81,14 +81,170 @@
             class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
           />
         </div>
-        <div class="space-y-1">
-          <label class="text-sm text-gray-300">URL da Imagem</label>
+
+        <div class="space-y-1 md:col-span-2">
+          <label class="text-sm text-gray-300">Imagem do Projeto</label>
+
+          @if (form().image_url) {
+            <div class="relative mb-2 h-40 overflow-hidden rounded-xl border border-white/10">
+              <img [src]="form().image_url" alt="Preview" class="h-full w-full object-cover" />
+              <button
+                type="button"
+                (click)="setField('image_url', '')"
+                class="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-black/70 text-white hover:bg-black"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  class="h-3.5 w-3.5"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m18 6-12 12"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m6 6 12 12"></path>
+                </svg>
+              </button>
+            </div>
+          }
+
+          <label
+            class="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 bg-white/5 p-6 transition-colors hover:border-white/40"
+            [class.opacity-50]="isUploading()"
+            [class.pointer-events-none]="isUploading()"
+          >
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              class="hidden"
+              (change)="onImageSelected($event)"
+              [disabled]="isUploading()"
+            />
+            @if (isUploading()) {
+              <div
+                class="h-6 w-6 animate-spin rounded-full border-2 border-white/20 border-t-white"
+              ></div>
+              <p class="text-xs text-gray-400">Enviando...</p>
+            } @else {
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                class="h-8 w-8 text-gray-500"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                ></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              <p class="text-xs text-gray-400">Arraste ou clique para selecionar</p>
+              <p class="text-xs text-gray-600">JPG, PNG ou WebP — máx. 5MB</p>
+            }
+          </label>
+
+          <div class="flex items-center gap-3 py-1">
+            <div class="h-px flex-1 bg-white/10"></div>
+            <span class="text-xs text-gray-600">ou cole uma URL</span>
+            <div class="h-px flex-1 bg-white/10"></div>
+          </div>
+
           <input
             [value]="form().image_url"
             (input)="setField('image_url', $any($event.target).value)"
+            placeholder="https://images.unsplash.com/..."
+            class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-gray-600"
+          />
+
+          @if (uploadError()) {
+            <p class="text-xs text-red-400">{{ uploadError() }}</p>
+          }
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-sm text-gray-300">Cor</label>
+          <select
+            [value]="form().color"
+            (change)="setField('color', $any($event.target).value)"
+            class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          >
+            <option value="teal">Teal</option>
+            <option value="violet">Violet</option>
+            <option value="amber">Amber</option>
+            <option value="rose">Rose</option>
+          </select>
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-sm text-gray-300">Filtros (separados por vírgula)</label>
+          <input
+            [value]="form().filtersRaw"
+            (input)="setField('filtersRaw', $any($event.target).value)"
+            placeholder="Web, Full-Stack, Python"
             class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
           />
         </div>
+
+        <div class="space-y-1 md:col-span-2">
+          <label class="text-sm text-gray-300">Categoria (ex: Frontend · Design)</label>
+          <input
+            [value]="form().category"
+            (input)="setField('category', $any($event.target).value)"
+            class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          />
+        </div>
+
+        <div class="space-y-1 md:col-span-2">
+          <label class="text-sm text-gray-300">Resumo do projeto (oneLiner)</label>
+          <input
+            [value]="form().oneLiner"
+            (input)="setField('oneLiner', $any($event.target).value)"
+            class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          />
+        </div>
+
+        <div class="space-y-1 md:col-span-2">
+          <label class="text-sm text-gray-300">O Problema (context)</label>
+          <textarea
+            [value]="form().context"
+            (input)="setField('context', $any($event.target).value)"
+            rows="3"
+            class="w-full resize-none rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          ></textarea>
+        </div>
+
+        <div class="space-y-1 md:col-span-2">
+          <label class="text-sm text-gray-300">A Solução Técnica (solution)</label>
+          <textarea
+            [value]="form().solution"
+            (input)="setField('solution', $any($event.target).value)"
+            rows="3"
+            class="w-full resize-none rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          ></textarea>
+        </div>
+
+        <div class="space-y-1 md:col-span-2">
+          <label class="text-sm text-gray-300">Lições Aprendidas</label>
+          <textarea
+            [value]="form().lessonsLearned"
+            (input)="setField('lessonsLearned', $any($event.target).value)"
+            rows="3"
+            class="w-full resize-none rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          ></textarea>
+        </div>
+
+        <div class="space-y-1 md:col-span-2">
+          <label class="text-sm text-gray-300">URL do Vídeo (YouTube ou Vimeo)</label>
+          <input
+            [value]="form().videoUrl"
+            (input)="setField('videoUrl', $any($event.target).value)"
+            placeholder="https://www.youtube.com/watch?v=..."
+            class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          />
+        </div>
+
         <div class="flex items-center gap-2 pt-6">
           <input
             id="featured"
