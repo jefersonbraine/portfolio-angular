@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RateLimit } from './rate-limit.service';
+import { RateLimitService } from './rate-limit.service';
 
-describe('RateLimit', () => {
-  let service: RateLimit;
+describe('RateLimitService', () => {
+  let service: RateLimitService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(RateLimit);
+    service = TestBed.inject(RateLimitService);
   });
 
   it('should be created', () => {
