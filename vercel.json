@@ -1,6 +1,5 @@
 {
   "buildCommand": "npm run build:prod",
-  "outputDirectory": "dist/portfolio-angular",
   "framework": "angular",
   "routes": [
     {
