@@ -28,7 +28,9 @@
             "styles": ["src/styles.css"],
             "security": {
               "allowedHosts": []
-            }
+            },
+            "ssr": false,
+            "prerender": false
           },
           "configurations": {
             "production": {
