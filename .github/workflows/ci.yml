@@ -48,6 +48,10 @@ jobs:
             },
             adminUid: '${{ secrets.ADMIN_UID }}',
             adminPath: '${{ secrets.ADMIN_PATH }}',
+            cloudinary: {
+              cloudName: '${{ secrets.CLOUDINARY_CLOUD_NAME }}',
+              uploadPreset: '${{ secrets.CLOUDINARY_UPLOAD_PRESET }}',
+            },
           };
           EOF
 

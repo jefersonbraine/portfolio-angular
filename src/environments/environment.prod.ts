@@ -12,4 +12,8 @@ export const environment = {
   },
   adminUid: '',
   adminPath: '',
+  cloudinary: {
+    cloudName: '',
+    uploadPreset: '',
+  },
 };

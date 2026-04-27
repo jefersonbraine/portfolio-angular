@@ -12,8 +12,10 @@ import {
 } from '@angular/fire/firestore';
 import { AuditService } from '../../../../core/services/audit.service';
 import { SanitizeService } from '../../../../shared/validators/sanitize.service';
+import { UploadService } from '../../../../core/services/upload.service';
 
 type ProjectStatus = 'Concluído' | 'Em andamento';
+type ProjectColor = 'teal' | 'violet' | 'amber' | 'rose'; // NOVO
 
 type AdminProjectItem = {
   id: string;
@@ -27,6 +29,14 @@ type AdminProjectItem = {
   featured: boolean;
   technologies: string[];
   order: number;
+  videoUrl: string;
+  category: string;
+  oneLiner: string;
+  context: string;
+  solution: string;
+  lessonsLearned: string;
+  color: ProjectColor;
+  filters: string[];
 };
 
 type ProjectForm = {
@@ -39,6 +49,14 @@ type ProjectForm = {
   demo_url: string;
   github_url: string;
   featured: boolean;
+  videoUrl: string;
+  category: string;
+  oneLiner: string;
+  context: string;
+  solution: string;
+  lessonsLearned: string;
+  color: ProjectColor;
+  filtersRaw: string;
 };
 
 const EMPTY_FORM: ProjectForm = {
@@ -51,6 +69,14 @@ const EMPTY_FORM: ProjectForm = {
   demo_url: '',
   github_url: '',
   featured: false,
+  videoUrl: '',
+  category: '',
+  oneLiner: '',
+  context: '',
+  solution: '',
+  lessonsLearned: '',
+  color: 'teal',
+  filtersRaw: '',
 };
 
 @Component({
@@ -74,7 +100,6 @@ export class AdminProjects implements OnInit {
 
   ngOnInit(): void {
     const q = query(collection(this.firestore, 'projects'), orderBy('order', 'asc'));
-
     collectionData(q, { idField: 'id' }).subscribe((data) => {
       this.projects.set(data as AdminProjectItem[]);
       this.isLoading.set(false);
@@ -99,6 +124,14 @@ export class AdminProjects implements OnInit {
       demo_url: project.demo_url,
       github_url: project.github_url,
       featured: project.featured,
+      category: project.category ?? '',
+      oneLiner: project.oneLiner ?? '',
+      context: project.context ?? '',
+      solution: project.solution ?? '',
+      lessonsLearned: project.lessonsLearned ?? '',
+      color: project.color ?? 'teal',
+      filtersRaw: (project.filters ?? []).join(', '),
+      videoUrl: (project as any).videoUrl ?? '', // ← adicione aqui
     });
     this.showForm.set(true);
   }
@@ -121,18 +154,29 @@ export class AdminProjects implements OnInit {
     this.isSaving.set(true);
 
     const sanitized = {
-      title: this.sanitizeService.sanitizeText(current.title),
-      year: this.sanitizeService.sanitizeText(current.year),
-      description: this.sanitizeService.sanitizeText(current.description),
-      image_url: this.sanitizeService.sanitizeUrl(current.image_url),
+      title: this.sanitizeService.sanitizeText(current.title ?? ''),
+      year: this.sanitizeService.sanitizeText(current.year ?? ''),
+      description: this.sanitizeService.sanitizeText(current.description ?? ''),
+      image_url: this.sanitizeService.sanitizeUrl(current.image_url ?? ''),
       status: current.status,
-      demo_url: this.sanitizeService.sanitizeUrl(current.demo_url),
-      github_url: this.sanitizeService.sanitizeUrl(current.github_url),
+      demo_url: this.sanitizeService.sanitizeUrl(current.demo_url ?? ''),
+      github_url: this.sanitizeService.sanitizeUrl(current.github_url ?? ''),
       featured: current.featured,
-      technologies: current.technologies
+      technologies: (current.technologies ?? '')
         .split(',')
         .map((t) => this.sanitizeService.sanitizeText(t))
         .filter(Boolean),
+      category: this.sanitizeService.sanitizeText(current.category ?? ''),
+      oneLiner: this.sanitizeService.sanitizeText(current.oneLiner ?? ''),
+      context: this.sanitizeService.sanitizeText(current.context ?? ''),
+      solution: this.sanitizeService.sanitizeText(current.solution ?? ''),
+      lessonsLearned: this.sanitizeService.sanitizeText(current.lessonsLearned ?? ''),
+      color: current.color ?? 'teal',
+      filters: (current.filtersRaw ?? '')
+        .split(',')
+        .map((f) => this.sanitizeService.sanitizeText(f))
+        .filter(Boolean),
+      videoUrl: this.sanitizeService.sanitizeUrl(current.videoUrl ?? ''), // ← adicione aqui
       updatedAt: new Date(),
     };
 
@@ -174,5 +218,30 @@ export class AdminProjects implements OnInit {
     return status === 'Concluído'
       ? 'bg-teal-500/20 text-teal-400 border-teal-500/30'
       : 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+  }
+
+  // Upload de imagens
+  private readonly uploadService = inject(UploadService);
+
+  protected readonly uploadError = signal('');
+  protected readonly isUploading = this.uploadService.isUploading;
+
+
+  protected async onImageSelected(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    this.uploadError.set('');
+
+    try {
+      const url = await this.uploadService.uploadImage(file);
+      this.form.update((state) => ({ ...state, image_url: url }));
+    } catch (error: any) {
+      this.uploadError.set(error.message ?? 'Erro ao fazer upload.');
+    }
+
+    // Limpa o input para permitir selecionar o mesmo arquivo novamente
+    input.value = '';
   }
 }
