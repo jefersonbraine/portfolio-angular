@@ -1,0 +1,7 @@
+# public/robots.txt
+User-agent: *
+Disallow: /
+
+User-agent: Googlebot
+Allow: /
+Disallow: /jb-7x9k-painel/
