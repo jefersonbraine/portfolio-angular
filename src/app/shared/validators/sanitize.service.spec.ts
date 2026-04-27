@@ -1,7 +1,7 @@
-import { Sanitize } from './sanitizeservice';
+import { SanitizeService } from './sanitize.service';
 
-describe('Sanitize', () => {
+describe('SanitizeService', () => {
   it('should create an instance', () => {
-    expect(new Sanitize()).toBeTruthy();
+    expect(new SanitizeService()).toBeTruthy();
   });
 });

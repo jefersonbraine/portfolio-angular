@@ -6,7 +6,19 @@ describe('AuthService', () => {
   let service: AuthService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: AuthService,
+          useValue: {
+            loginWithGoogle: async () => {},
+            logout: async () => {},
+            isLoggedIn: () => null,
+            getToken: async () => null,
+          },
+        },
+      ],
+    });
     service = TestBed.inject(AuthService);
   });
 
