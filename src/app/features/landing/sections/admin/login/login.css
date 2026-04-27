@@ -1,0 +1,63 @@
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 520ms ease-out forwards;
+}
+
+.login-card {
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+.login-submit-btn {
+  background: #ffffff;
+  color: #000000;
+  transition:
+    transform 180ms ease,
+    background-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.login-submit-btn:hover:not(:disabled) {
+  background: #e5e7eb;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
+}
+
+.login-submit-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.google-btn-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .login-submit-btn {
+    transition: none;
+  }
+}

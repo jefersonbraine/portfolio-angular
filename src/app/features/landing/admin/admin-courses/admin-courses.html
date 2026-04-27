@@ -1,1 +1,156 @@
-<p>admin-courses works!</p>
+<section class="space-y-6">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h2 class="text-xl font-semibold text-white">Cursos ({{ courses().length }})</h2>
+    <button
+      type="button"
+      (click)="openNewForm()"
+      class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-gray-200 cursor-pointer"
+    >
+      Novo Curso
+    </button>
+  </div>
+
+  @if (showForm()) {
+    <form
+      (submit)="submitForm($event)"
+      class="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-6"
+    >
+      <h3 class="font-semibold text-white">{{ editingId() ? 'Editar Curso' : 'Novo Curso' }}</h3>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="space-y-1 md:col-span-2">
+          <label class="text-sm text-gray-300">Título *</label>
+          <input
+            [value]="form().title"
+            (input)="setField('title', $any($event.target).value)"
+            required
+            class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          />
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-sm text-gray-300">Provedor *</label>
+          <input
+            [value]="form().provider"
+            (input)="setField('provider', $any($event.target).value)"
+            required
+            class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          />
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-sm text-gray-300">Ano</label>
+          <input
+            [value]="form().year"
+            (input)="setField('year', $any($event.target).value)"
+            class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          />
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-sm text-gray-300">Carga Horária</label>
+          <input
+            [value]="form().hours"
+            (input)="setField('hours', $any($event.target).value)"
+            class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          />
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-sm text-gray-300">Status</label>
+          <select
+            [value]="form().status"
+            (change)="setField('status', $any($event.target).value)"
+            class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          >
+            <option value="Concluído">Concluído</option>
+            <option value="Em andamento">Em andamento</option>
+          </select>
+        </div>
+
+        <div class="space-y-1 md:col-span-2">
+          <label class="text-sm text-gray-300">Descrição</label>
+          <textarea
+            [value]="form().description"
+            (input)="setField('description', $any($event.target).value)"
+            rows="3"
+            class="w-full resize-none rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          ></textarea>
+        </div>
+
+        <div class="space-y-1 md:col-span-2">
+          <label class="text-sm text-gray-300">URL do Certificado</label>
+          <input
+            [value]="form().certificate_url"
+            (input)="setField('certificate_url', $any($event.target).value)"
+            class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          />
+        </div>
+      </div>
+
+      <div class="flex gap-3 pt-2">
+        <button
+          type="submit"
+          [disabled]="isSaving()"
+          class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-gray-200 disabled:opacity-60 cursor-pointer"
+        >
+          @if (isSaving()) {
+            Salvando...
+          } @else {
+            {{ editingId() ? 'Salvar' : 'Criar' }}
+          }
+        </button>
+        <button
+          type="button"
+          (click)="closeForm()"
+          class="rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10 cursor-pointer"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  }
+
+  <div class="space-y-3">
+    @for (course of courses(); track course.id) {
+      <article
+        class="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/5 p-5"
+      >
+        <div class="min-w-0 flex-1">
+          <div class="mb-1 flex flex-wrap items-center gap-2">
+            <h3 class="font-medium text-white">{{ course.title }}</h3>
+            <span
+              class="rounded-full border px-2 py-0.5 text-xs"
+              [class]="getStatusClass(course.status)"
+            >
+              {{ course.status }}
+            </span>
+          </div>
+          <p class="text-sm text-teal-400">{{ course.provider }}</p>
+          <p class="text-xs text-gray-500">{{ course.year }} · {{ course.hours }}</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            (click)="openEdit(course)"
+            class="rounded-lg border border-white/10 bg-transparent px-3 py-1.5 text-xs text-gray-300 transition-colors hover:bg-white/10 hover:text-white"
+          >
+            Editar
+          </button>
+          <button
+            type="button"
+            (click)="deleteCourse(course.id)"
+            class="rounded-lg border border-red-500/20 bg-transparent px-3 py-1.5 text-xs text-red-300 transition-colors hover:bg-red-500/10"
+          >
+            Excluir
+          </button>
+        </div>
+      </article>
+    }
+
+    @if (courses().length === 0) {
+      <p class="py-12 text-center text-gray-500">Nenhum curso cadastrado ainda.</p>
+    }
+  </div>
+</section>

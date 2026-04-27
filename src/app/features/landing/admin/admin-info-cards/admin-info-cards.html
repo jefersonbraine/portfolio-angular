@@ -1,1 +1,127 @@
-<p>admin-info-cards works!</p>
+<section class="space-y-6">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h2 class="text-xl font-semibold text-white">Info Cards ({{ cards().length }})</h2>
+    <button
+      type="button"
+      (click)="openNewForm()"
+      class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-gray-200 cursor-pointer"
+    >
+      Novo Card
+    </button>
+  </div>
+
+  @if (showForm()) {
+    <form
+      (submit)="submitForm($event)"
+      class="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-6"
+    >
+      <h3 class="font-semibold text-white">{{ editingId() ? 'Editar Card' : 'Novo Card' }}</h3>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="space-y-1">
+          <label class="text-sm text-gray-300">Título *</label>
+          <input
+            [value]="form().title"
+            (input)="setField('title', $any($event.target).value)"
+            required
+            class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          />
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-sm text-gray-300">Cor</label>
+          <select
+            [value]="form().color"
+            (change)="setField('color', $any($event.target).value)"
+            class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          >
+            <option value="teal">Teal</option>
+            <option value="violet">Violet</option>
+            <option value="amber">Amber</option>
+            <option value="rose">Rose</option>
+          </select>
+        </div>
+
+        <div class="space-y-1 md:col-span-2">
+          <label class="text-sm text-gray-300">Conteúdo *</label>
+          <textarea
+            [value]="form().content"
+            (input)="setField('content', $any($event.target).value)"
+            rows="3"
+            required
+            class="w-full resize-none rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          ></textarea>
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-sm text-gray-300">Ícone (nome Lucide)</label>
+          <input
+            [value]="form().icon"
+            (input)="setField('icon', $any($event.target).value)"
+            class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          />
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-sm text-gray-300">Ordem</label>
+          <input
+            type="number"
+            [value]="form().order"
+            (input)="setField('order', +$any($event.target).value)"
+            class="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white"
+          />
+        </div>
+      </div>
+
+      <div class="flex gap-3 pt-2">
+        <button
+          type="submit"
+          class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-gray-200 cursor-pointer"
+        >
+          {{ editingId() ? 'Salvar' : 'Criar' }}
+        </button>
+        <button
+          type="button"
+          (click)="closeForm()"
+          class="rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10 cursor-pointer"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  }
+
+  <div class="grid gap-4 md:grid-cols-2">
+    @for (card of cards(); track card.id) {
+      <article class="rounded-xl border bg-white/5 p-5" [class]="getCardClass(card.color)">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <h3 class="mb-1 font-medium text-white">{{ card.title }}</h3>
+            <p class="text-sm text-gray-400">{{ card.content }}</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              (click)="openEdit(card)"
+              class="rounded-lg border border-white/10 bg-transparent px-3 py-1.5 text-xs text-gray-300 transition-colors hover:bg-white/10 hover:text-white"
+            >
+              Editar
+            </button>
+            <button
+              type="button"
+              (click)="deleteCard(card.id)"
+              class="rounded-lg border border-red-500/20 bg-transparent px-3 py-1.5 text-xs text-red-300 transition-colors hover:bg-red-500/10"
+            >
+              Excluir
+            </button>
+          </div>
+        </div>
+      </article>
+    }
+
+    @if (cards().length === 0) {
+      <p class="py-12 text-center text-gray-500 md:col-span-2">Nenhum card cadastrado ainda.</p>
+    }
+  </div>
+</section>

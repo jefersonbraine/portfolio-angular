@@ -1,6 +1,13 @@
 import { Component, input } from '@angular/core';
 
-type SectionKey = 'home' | 'formacao' | 'cursos' | 'projetos' | 'sobre-mim' | 'contato';
+type SectionKey =
+  | 'home'
+  | 'formacao'
+  | 'cursos'
+  | 'projetos'
+  | 'sobre-mim'
+  | 'contato'
+  | 'not-found';
 
 type NavItem = {
   label: string;

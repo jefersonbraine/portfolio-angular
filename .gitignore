@@ -48,3 +48,7 @@ Design/
 
 
 copilot-instructions.md
+
+src/environments/environment.ts
+
+service-account.json
