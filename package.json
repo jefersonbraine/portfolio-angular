@@ -2,9 +2,11 @@
   "name": "portfolio-angular",
   "version": "0.0.0",
   "scripts": {
+    "set-env": "node scripts/set-env.js",
     "ng": "ng",
     "start": "ng serve --live-reload --no-hmr --poll=1000",
     "build": "ng build",
+    "build:prod": "npm run set-env && ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:portfolio-angular": "node dist/portfolio-angular/server/server.mjs"

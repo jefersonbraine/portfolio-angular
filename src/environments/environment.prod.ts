@@ -1,4 +1,4 @@
-// src/environments/environment.prod.ts (produção — sobe ao git SEM valores reais)
+// src/environments/environment.prod.ts
 export const environment = {
   production: true,
   firebase: {
