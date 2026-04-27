@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const envFile = `
+const envContent = `
 export const environment = {
   production: true,
   firebase: {
@@ -23,6 +23,15 @@ export const environment = {
 };
 `;
 
-const targetPath = path.join(__dirname, '..', 'src', 'environments', 'environment.prod.ts');
-fs.writeFileSync(targetPath, envFile);
-console.log('✅ environment.prod.ts gerado com sucesso!');
+// Gera os dois arquivos
+const envDir = path.join(__dirname, '..', 'src', 'environments');
+
+// Cria a pasta se não existir
+if (!fs.existsSync(envDir)) {
+  fs.mkdirSync(envDir, { recursive: true });
+}
+
+fs.writeFileSync(path.join(envDir, 'environment.ts'), envContent);
+fs.writeFileSync(path.join(envDir, 'environment.prod.ts'), envContent);
+
+console.log('✅ environment.ts e environment.prod.ts gerados com sucesso!');
