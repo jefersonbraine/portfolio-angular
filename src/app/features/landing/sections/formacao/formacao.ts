@@ -24,7 +24,7 @@ type StatItem = {
 export class Formacao {
   protected readonly educationData: EducationItem[] = [
     {
-      year: '2023',
+      year: '2025',
       title: 'Bacharelado em Engenharia de Software',
       institution: 'Centro Universitário Internacional - Uninter',
       period: '2025 - Atual',
