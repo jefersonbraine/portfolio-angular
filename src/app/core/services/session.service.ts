@@ -1,39 +1,56 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, inject } from '@angular/core';
 import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class SessionService {
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly zone = inject(NgZone);
+
   private readonly TIMEOUT_MS = 30 * 60 * 1000; // 30 minutos
   private timeoutRef: any;
-  private readonly EVENTS = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
 
+  private readonly EVENTS = [
+    'mousemove', 'keydown', 'wheel', 'DOMMouseScroll',
+    'mouseWheel', 'mousedown', 'touchstart', 'touchmove',
+    'MSPointerDown', 'MSPointerMove'
+  ];
 
-  constructor(private authService: AuthService, private zone: NgZone) { }
+  // Referência única para a função de reset
+  private resetHandler = () => this.reset();
 
   startWatching(): void {
     this.reset();
-    // Roda fora do Angular para não disparar change detection a cada mousemove
     this.zone.runOutsideAngular(() => {
-      this.EVENTS.forEach(event => {
-        document.addEventListener(event, () => this.reset(), { passive: true });
+      this.EVENTS.forEach((event) => {
+        // Agora usa a referência salva
+        document.addEventListener(event, this.resetHandler, { passive: true });
       });
     });
   }
 
-   stopWatching(): void {
+  stopWatching(): void {
     clearTimeout(this.timeoutRef);
-    this.EVENTS.forEach(event =>
-      document.removeEventListener(event, () => this.reset())
-    );
-   }
+    this.EVENTS.forEach((event) => {
+      // Remove usando a mesma referência exata
+      document.removeEventListener(event, this.resetHandler);
+    });
+  }
 
   private reset(): void {
     clearTimeout(this.timeoutRef);
-    this.timeoutRef = setTimeout(() => {
-      this.zone.run(() => this.authService.logout());
-    }, this.TIMEOUT_MS);
+    this.zone.runOutsideAngular(() => {
+      this.timeoutRef = setTimeout(() => this.logout(), this.TIMEOUT_MS);
+    });
+  }
+
+  private logout(): void {
+    this.zone.run(() => {
+      this.auth.logout().then(() => {
+        this.stopWatching();
+        this.router.navigate(['/login']);
+      });
+    });
   }
 }
-
