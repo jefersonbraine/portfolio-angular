@@ -52,7 +52,7 @@ export class Formacao {
       year: '2018',
       title: 'Tecnólogo em Serviços Jurídicos',
       institution: 'Centro Universitário Internacional - Uninter',
-      period: '2016 - 2020',
+      period: '2018 - 2020',
       description:
         'Conhecimento aprofundado em legislação, ética e prática forense, além de técnicas de documentação jurídica. Bem capacitado para atuar como assessor em departamentos jurídicos e cartórios.',
     },
