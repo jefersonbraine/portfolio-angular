@@ -1,26 +1,29 @@
 rules_version = '2';
 
 service cloud.firestore {
+  match /databases/{database}/documents {
 
-  function isAdmin() {
-    return request.auth != null && request.auth.uid == "ZylNBEwdTaR8DDebEyH0hdBGH2b2";
-  }
+    function isAdmin() {
+      return request.auth != null && request.auth.uid == "ZylNBEwdTaR8DDebEyH0hdBGH2b2";
+    }
 
-  match /projects/{projectId} {
-    allow read: if true;
-    allow create, update, delete: if isAdmin();
-  }
-  match /courses/{courseId} {
-    allow read: if true;
-    allow create, update, delete: if isAdmin();
-  }
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
 
-  match /audit_logs/{logId} {
-      allow read, create: if isAdmin();
-      allow update, delete: if false;
+    match /courses/{courseId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /audit_logs/{logId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
     }
 
     match /{document=**} {
       allow read, write: if false;
     }
+  }
 }

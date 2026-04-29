@@ -56,4 +56,22 @@ export class Cursos implements OnInit {
   protected isCompleted(course: CourseItem): boolean {
     return course.status === 'Concluido' || course.status === 'Concluído';
   }
+
+  /**
+   * Valida a URL do certificado para evitar injeção de scripts maliciosos.
+   */
+
+  protected getSafeLink(url: string | null | undefined): string {
+    if (!url) return '#';
+
+    try {
+      const parsed = new URL(url);
+      // Só permite protocolos seguros (https) para evitar javascript: ou data:
+      if (parsed.protocol !== 'https:') return '#';
+      return parsed.toString();
+    } catch {
+      // Se a URL for inválida, retorna um link morto
+      return '#';
+    }
+  }
 }
