@@ -2,26 +2,33 @@
 import { getFirestore } from 'firebase-admin/firestore';
 
 export async function checkRateLimit(uid: string, action: string): Promise<void> {
-  const ref = getFirestore().doc(`rate_limits/${uid}_${action}`);
-  const doc = await ref.get();
+  const db = getFirestore();
+  const ref = db.doc(`rate_limits/${uid}_${action}`);
   const now = Date.now();
   const windowMs = 15 * 60 * 1000;
   const maxCalls = 20;
 
-  if (doc.exists) {
-    const data = doc.data()!;
+  await db.runTransaction(async (transaction) => {
+    const doc = await transaction.get(ref);
 
-    if (now - data['firstCall'] > windowMs) {
-      await ref.set({ firstCall: now, count: 1 });
+    if (!doc.exists) {
+      transaction.set(ref, { firstCall: now, count: 1 });
       return;
     }
 
+    const data = doc.data()!;
+    // Se passou a janela de tempo, reinicia o contador
+    if (now - data['firstCall'] > windowMs) {
+      transaction.set(ref, { firstCall: now, count: 1 });
+      return;
+    }
+    // Se atingiu o limite dentro da janela
     if (data['count'] >= maxCalls) {
       throw new Error('rate_limit_exceeded');
     }
 
-    await ref.update({ count: data['count'] + 1 });
-  } else {
-    await ref.set({ firstCall: now, count: 1 });
-  }
+    // incrementa o contador de forma segura
+    transaction.update(ref, { count: data['count'] + 1 });
+  });
+
 }
