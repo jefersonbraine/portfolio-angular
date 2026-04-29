@@ -2,6 +2,29 @@
 const fs = require('fs');
 const path = require('path');
 
+const requiredEnvs = [
+  'FIREBASE_API_KEY',
+  'FIREBASE_AUTH_DOMAIN',
+  'FIREBASE_PROJECT_ID',
+  'ADMIN_UID',
+];
+
+const missing = requiredEnvs.filter((key) => !process.env[key]);
+
+if (missing.length > 0) {
+  // Se estiver na Vercel ou CI, mata o processo com erro
+  if (process.env.CI || process.env.VERCEL) {
+    console.error(`❌ ERRO FATAL DE BUILD: Faltam variáveis de ambiente: ${missing.join(', ')}`);
+    process.exit(1);
+  } else {
+    // Se for no seu PC, apenas avisa para não te impedir de trabalhar
+    console.warn(`⚠️ AVISO LOCAL: Variáveis ausentes (${missing.join(', ')}).`);
+  }
+}
+
+// 2. DEPOIS: Define os caminhos
+const targetPath = path.join(__dirname, '../src/environments/environment.prod.ts');
+
 const envContent = `
 export const environment = {
   production: true,
