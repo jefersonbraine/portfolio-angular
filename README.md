@@ -1,151 +1,180 @@
-# Portfólio Angular | Jeferson Braine Leal
+# Jeferson Braine Leal | Portfolio Angular
 
 <p align="center">
-  <img src="public/assets/banner-portfolio.png" alt="Banner do portfólio de Jeferson Braine Leal" width="100%" />
+  <img src="public/assets/banner-portfolio.png" alt="Banner do portfolio Angular" width="100%" />
 </p>
 
 <p align="center">
-  <a href="https://angular.dev/"><img alt="Angular" src="https://img.shields.io/badge/Angular-21-DD0031?style=for-the-badge&logo=angular&logoColor=white"></a>
-  <a href="https://www.typescriptlang.org/"><img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript&logoColor=white"></a>
-  <a href="https://tailwindcss.com/"><img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white"></a>
-  <a href="https://vitest.dev/"><img alt="Vitest" src="https://img.shields.io/badge/Vitest-4-6E9F18?style=for-the-badge&logo=vitest&logoColor=white"></a>
+  <a href="https://angular.dev/"><img alt="Angular 21" src="https://img.shields.io/badge/Angular-21-DD0031?style=for-the-badge&logo=angular&logoColor=white"></a>
+  <a href="https://www.typescriptlang.org/"><img alt="TypeScript 5.9" src="https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript&logoColor=white"></a>
+  <a href="https://firebase.google.com/"><img alt="Firebase" src="https://img.shields.io/badge/Firebase-Auth%20%7C%20Firestore%20%7C%20Functions-FFCA28?style=for-the-badge&logo=firebase&logoColor=black"></a>
+  <a href="https://tailwindcss.com/"><img alt="Tailwind CSS 4" src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white"></a>
 </p>
 
 <p align="center">
-  Um portfólio pessoal reconstruído em Angular para apresentar trajetória, habilidades e projetos com narrativa, performance e acabamento visual.
+  Um portfolio construído para apresentar trabalho real com impacto visual, narrativa técnica e um painel administrativo privado para gerenciar conteúdo com autonomia.
 </p>
-
----
 
 ## Sobre o projeto
 
-Este projeto é a versão em Angular do meu portfólio profissional. A proposta não é ser apenas uma página com links: cada seção foi pensada para comunicar quem eu sou como engenheiro de software, quais problemas eu resolvo e como tomo decisões técnicas.
+Este projeto é o portfolio pessoal de Jeferson Braine Leal recriado em Angular com uma proposta clara: unir apresentação premium, arquitetura moderna e um fluxo real de gestão de conteúdo.
 
-A aplicação funciona como uma landing page interativa com navegação por seções, cards animados, cases de projeto em modal, formulário de contato com validações e uma identidade visual escura, moderna e responsiva.
+Aqui o portfolio não funciona como uma simples página estática. Ele foi pensado como um produto:
 
-## Destaques
+- uma landing page forte, responsiva e com identidade própria
+- uma vitrine dinâmica de projetos e cursos carregados do Firestore
+- um painel administrativo protegido para atualizar conteúdo sem mexer manualmente no código
+- uma base preparada para autenticação, upload de imagens, auditoria e operações seguras
 
-- Hero section com chamada visual forte e CTA direto para contato.
-- Navegação por seções: Formação, Cursos, Projetos, Sobre mim e Contato.
-- Seção de projetos com filtros por categoria: Todos, Web, Full-Stack e Python.
-- Cards de projeto com contexto, solução técnica, stack, status e lições aprendidas.
-- Modal de case study para apresentar projetos com profundidade.
-- Página "Sobre mim" com foto, estatísticas, habilidades, interesses e links profissionais.
-- Formulário reativo com validação, sanitização básica e estado de envio.
-- Componentes compartilhados de UI para inputs, botões, badges, tabs, labels e textarea.
-- Preparado com Angular SSR e servidor Express.
+## O que torna esse projeto especial
 
-## Preview
+- Design com presença, transições suaves e navegação por seções
+- Experiência pública construída para contar história, não apenas listar links
+- Seção de projetos com filtros, modal detalhado, tecnologias, contexto, solução e aprendizados
+- Área administrativa privada com login Google restrito e dashboard exclusivo
+- Integração com Firebase Authentication, Firestore e Cloud Functions
+- Upload seguro de imagens com Cloudinary
+- Estrutura Angular moderna com standalone components, signals e control flow nativo
 
-<p align="center">
-  <img src="public/assets/profile-picture/eu.jpg" alt="Foto de perfil de Jeferson Braine Leal" width="160" />
-</p>
+## Experiência da aplicação
 
-O portfólio apresenta Jeferson Braine Leal, engenheiro de software de Cerro Azul, Brasil, com experiência em Angular, TypeScript, Python, C#, APIs REST, bancos de dados e automação de processos.
+### Landing pública
+
+- Hero section com direção visual forte
+- navegação por hash entre `Home`, `Formação`, `Cursos`, `Projetos`, `Sobre mim` e `Contato`
+- projetos renderizados dinamicamente a partir do banco
+- modal de case study para aprofundar cada projeto
+- embed de vídeo para demonstrações
+- formulário de contato com validação e sanitização
+
+### Painel admin
+
+- login privado em rota administrativa personalizada
+- autenticação com Google via Firebase Auth
+- dashboard com navegação por áreas
+- gerenciamento de projetos
+- gerenciamento de cursos
+- importação de repositórios do GitHub
+- upload de imagens para uso nos conteúdos
 
 ## Stack
 
 | Camada | Tecnologias |
 | --- | --- |
-| Framework | Angular 21 |
-| Linguagem | TypeScript 5.9 |
-| Estilo | Tailwind CSS 4, CSS componentizado |
-| Forms | Angular Reactive Forms |
-| Renderização | Angular SSR, Express |
-| Testes | Vitest, jsdom |
-| Build | Angular CLI, npm |
-| Qualidade | Prettier, budgets de produção |
+| Frontend | Angular 21, TypeScript 5.9 |
+| UI | Tailwind CSS 4, CSS componentizado |
+| Estado | Signals, computed, control flow do Angular |
+| Backend | Firebase Auth, Firestore, Cloud Functions |
+| Upload | Cloudinary |
+| SSR / Runtime | Angular SSR, Express |
+| Qualidade | Vitest, jsdom, Prettier |
+| Scripts | Node.js, ts-node, firebase-admin |
 
-## Estrutura
+## Arquitetura
 
 ```text
 src/
   app/
+    core/             # auth, guards, interceptors e serviços
     features/
-      landing/
-        sections/
-          home/          # Hero e cards de navegação
-          projetos/      # Lista, filtros e modal de projetos
-          sobre-mim/     # Perfil, skills, contatos e interesses
-          contato/       # Formulário reativo e canais de contato
-          formacao/      # Formação acadêmica
-          cursos/        # Cursos e certificações
-        admin/           # Componentes administrativos/apoio visual
-      projects/
-        project-moda/    # Página dedicada de projeto
-    layout/
-      navbar/            # Navegação principal
-      footer/            # Rodapé
-    shared/
-      ui/                # Componentes reutilizáveis
-public/
-  assets/
-    banner-portfolio.png
-    logo/logoSigla.svg
-    profile-picture/eu.jpg
+      landing/        # experiência pública + painel admin
+      projects/       # páginas dedicadas de projeto
+    layout/           # navbar e footer
+    shared/           # UI reutilizável e validações
+  environments/
+scripts/              # setup de ambiente e migração de dados
+public/assets/        # banner, logo e imagem de perfil
 ```
+
+## Recursos técnicos
+
+- autenticação protegida por UID administrador
+- guard de rota para o painel privado
+- timeout de sessão por inatividade
+- rate limit para tentativas de login
+- interceptors para autenticação e proteção de requests
+- sanitização de entradas antes de persistência
+- auditoria de operações importantes
 
 ## Como rodar localmente
 
-Clone o repositório:
+### 1. Clone o repositório
 
 ```bash
 git clone https://github.com/jefersonbraine/portfolio-angular.git
 cd portfolio-angular
 ```
 
-Instale as dependências:
+### 2. Instale as dependências
 
 ```bash
 npm install
 ```
 
-Inicie o servidor de desenvolvimento:
+### 3. Inicie o projeto
 
 ```bash
 npm start
 ```
 
-Acesse:
+Abra no navegador:
 
 ```text
 http://localhost:4200
+```
+
+## Variáveis de ambiente
+
+O projeto usa geração automática de `environment.ts` e `environment.prod.ts` via `scripts/set-env.js`.
+
+Variáveis utilizadas:
+
+```bash
+FIREBASE_API_KEY
+FIREBASE_AUTH_DOMAIN
+FIREBASE_PROJECT_ID
+FIREBASE_STORAGE_BUCKET
+FIREBASE_MESSAGING_SENDER_ID
+FIREBASE_APP_ID
+FIREBASE_MEASUREMENT_ID
+ADMIN_UID
+ADMIN_PATH
+CLOUDINARY_CLOUD_NAME
+CLOUDINARY_UPLOAD_PRESET
 ```
 
 ## Scripts disponíveis
 
 | Comando | Descrição |
 | --- | --- |
-| `npm start` | Inicia o servidor local com live reload |
-| `npm run build` | Gera a build de produção em `dist/` |
-| `npm run watch` | Executa build em modo observação |
-| `npm test` | Executa os testes com Vitest |
-| `npm run serve:ssr:portfolio-angular` | Serve a build SSR gerada |
+| `npm start` | inicia o servidor de desenvolvimento |
+| `npm run build` | gera a build do projeto |
+| `npm run build:prod` | gera os environments e executa a build de produção |
+| `npm run watch` | build em modo observação |
+| `npm test` | executa os testes |
+| `npm run serve:ssr:portfolio-angular` | serve a build SSR gerada |
 
-## Decisões técnicas
+## Seed e migração
 
-- **Angular moderno**: componentes standalone, control flow nativo (`@for`, `@if`, `@switch`) e signals para estado local.
-- **UI orientada a dados**: cards, projetos, skills e contatos são renderizados a partir de arrays tipados.
-- **Links externos tratados com cuidado**: sanitização de URLs e validação de protocolos/hosts onde faz sentido.
-- **Formulário robusto**: validações de campos obrigatórios, tamanho máximo, telefone, opções permitidas e conteúdo suspeito.
-- **Performance visual**: animações baseadas em classes e transições leves, evitando lógica pesada na camada de template.
-- **Assets locais**: banner, logo e foto de perfil servidos pela pasta `public/assets`.
+O projeto inclui um script de migração em `scripts/migrate-data.ts` para popular o Firestore com dados iniciais, especialmente cursos e projetos.
 
-## Projetos apresentados
+Execução sugerida:
 
-- **Portfolio Website**: frontend/design com foco em narrativa visual e boas práticas.
-- **Ecommerce Website**: experiência full-stack com autenticação, pagamento e recomendações por IA.
-- **Conecta Doc**: SaaS documental em andamento com Angular, Supabase e TypeScript.
-- **Iniciando.dev**: site institucional de marca tech com foco em SEO e conversão.
-- **Password Manager**: aplicação desktop em Python com criptografia AES-256.
+```bash
+npx ts-node --project scripts/tsconfig.json scripts/migrate-data.ts
+```
 
-## Roadmap
+## Assets do projeto
 
-- Publicar versão final em produção.
-- Adicionar links reais de demo, código, documentação e vídeos para cada projeto.
-- Integrar envio real do formulário de contato.
-- Expandir testes dos componentes principais.
-- Melhorar SEO com metadados por seção e preview social.
+- `public/assets/banner-portfolio.png`
+- `public/assets/logo/logoSigla.svg`
+- `public/assets/profile-picture/eu.jpg`
+
+## Repositório
+
+```text
+https://github.com/jefersonbraine/portfolio-angular
+```
 
 ## Autor
 
@@ -159,5 +188,5 @@ Engenheiro de Software
 ---
 
 <p align="center">
-  Feito com Angular, TypeScript e atenção aos detalhes.
+  Design forte na frente. Estrutura séria por trás.
 </p>
