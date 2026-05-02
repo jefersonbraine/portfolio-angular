@@ -1,5 +1,6 @@
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import {
   Firestore,
   collection,
@@ -227,7 +228,9 @@ export class AdminProjects implements OnInit {
   private readonly uploadService = inject(UploadService);
 
   protected readonly uploadError = signal('');
-  protected readonly isUploading = this.uploadService.isUploading;
+  protected readonly isUploading = toSignal(this.uploadService.isUploading, {
+    initialValue: false,
+  });
 
   protected async onImageSelected(event: Event): Promise<void> {
     const input = event.target as HTMLInputElement;
