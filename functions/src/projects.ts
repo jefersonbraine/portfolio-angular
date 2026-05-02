@@ -1,7 +1,7 @@
 import { onCall, HttpsError } from "firebase-functions/https";
 import { defineString } from "firebase-functions/params";
 import { FieldValue, getFirestore } from "firebase-admin/firestore";
-import { get } from "node:http";
+
 
 const adminUid = defineString("ADMIN_UID");
 

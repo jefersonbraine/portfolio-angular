@@ -1,3 +1,4 @@
+import { Functions, httpsCallable } from '@angular/fire/functions';
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import {
   Firestore,
@@ -88,6 +89,7 @@ const EMPTY_FORM: ProjectForm = {
 })
 export class AdminProjects implements OnInit {
   private readonly firestore = inject(Firestore);
+  private readonly functions = inject(Functions);
   private readonly auditService = inject(AuditService);
   private readonly sanitizeService = inject(SanitizeService);
 
@@ -182,16 +184,16 @@ export class AdminProjects implements OnInit {
 
     try {
       const editingId = this.editingId();
+
       if (editingId) {
-        await updateDoc(doc(this.firestore, 'projects', editingId), sanitized);
-        await this.auditService.log('UPDATE', 'project', { title: sanitized.title });
+        const updateProjectFn = httpsCallable(this.functions, 'updateProject');
+        await updateProjectFn({ id: editingId, data: sanitized });
       } else {
-        await addDoc(collection(this.firestore, 'projects'), {
+        const createProjectFn = httpsCallable(this.functions, 'createProject');
+        await createProjectFn({
           ...sanitized,
           order: this.projects().length + 1,
-          createdAt: new Date(),
         });
-        await this.auditService.log('CREATE', 'project', { title: sanitized.title });
       }
 
       this.form.set({ ...EMPTY_FORM });
@@ -207,8 +209,9 @@ export class AdminProjects implements OnInit {
   protected async deleteProject(id: string): Promise<void> {
     if (!confirm('Tem certeza que deseja excluir este projeto?')) return;
     try {
-      await deleteDoc(doc(this.firestore, 'projects', id));
-      await this.auditService.log('DELETE', 'project', { id });
+      // --- TROCA AQUI: Delete via Cloud Function ---
+      const deleteProjectFn = httpsCallable(this.functions, 'deleteProject');
+      await deleteProjectFn({ id });
     } catch (error) {
       console.error('Erro ao excluir projeto:', error);
     }
@@ -225,7 +228,6 @@ export class AdminProjects implements OnInit {
 
   protected readonly uploadError = signal('');
   protected readonly isUploading = this.uploadService.isUploading;
-
 
   protected async onImageSelected(event: Event): Promise<void> {
     const input = event.target as HTMLInputElement;
