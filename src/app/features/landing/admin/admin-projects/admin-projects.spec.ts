@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Firestore } from '@angular/fire/firestore';
+import { Functions } from '@angular/fire/functions';
 import { AuditService } from '../../../../core/services/audit.service';
 import { SanitizeService } from '../../../../shared/validators/sanitize.service';
 import { vi } from 'vitest';
@@ -16,6 +17,7 @@ describe('AdminProjects', () => {
     await TestBed.configureTestingModule({
       imports: [AdminProjects],
       providers: [
+        { provide: Functions, useValue: { httpsCallable: () => async () => ({}) } },
         { provide: Firestore, useValue: {} },
         { provide: AuditService, useValue: { log: async () => {} } },
         {
