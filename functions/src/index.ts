@@ -8,3 +8,6 @@ export { importFromGithub } from './github.import';
 
 // Exporta as novas funções de Projetos
 export { createProject, updateProject, deleteProject } from './projects';
+
+// Exporta as novas funções de Cursos
+export { createCourse, updateCourse, deleteCourse } from './courses';
