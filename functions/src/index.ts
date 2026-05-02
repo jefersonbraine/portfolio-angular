@@ -11,3 +11,5 @@ export { createProject, updateProject, deleteProject } from './projects';
 
 // Exporta as novas funções de Cursos
 export { createCourse, updateCourse, deleteCourse } from './courses';
+
+export { getCloudinarySignature } from './media';

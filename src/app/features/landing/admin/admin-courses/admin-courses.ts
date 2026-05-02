@@ -1,16 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
-import {
-  Firestore,
-  collection,
-  collectionData,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
-  orderBy,
-  query,
-} from '@angular/fire/firestore';
-import { AuditService } from '../../../../core/services/audit.service';
+import { Firestore, collection, collectionData, orderBy, query } from '@angular/fire/firestore';
+// 1. Importar Functions
+import { Functions, httpsCallable } from '@angular/fire/functions';
 import { SanitizeService } from '../../../../shared/validators/sanitize.service';
 
 type CourseStatus = 'Concluído' | 'Em andamento';
@@ -56,8 +47,9 @@ const EMPTY_FORM: CourseForm = {
 })
 export class AdminCourses implements OnInit {
   private readonly firestore = inject(Firestore);
-  private readonly auditService = inject(AuditService);
   private readonly sanitizeService = inject(SanitizeService);
+  // 2. Injetar Functions
+  private readonly functions = inject(Functions);
 
   protected readonly courses = signal<AdminCourseItem[]>([]);
   protected readonly showForm = signal(false);
@@ -78,7 +70,7 @@ export class AdminCourses implements OnInit {
   protected openNewForm(): void {
     this.editingId.set(null);
     this.form.set({ ...EMPTY_FORM });
-    this.showForm.update((v) => !v);
+    this.showForm.set(true);
   }
 
   protected openEdit(course: AdminCourseItem): void {
@@ -120,21 +112,22 @@ export class AdminCourses implements OnInit {
       status: current.status,
       description: this.sanitizeService.sanitizeText(current.description),
       certificate_url: this.sanitizeService.sanitizeUrl(current.certificate_url),
-      updatedAt: new Date(),
     };
 
     try {
       const editingId = this.editingId();
+
       if (editingId) {
-        await updateDoc(doc(this.firestore, 'courses', editingId), sanitized);
-        await this.auditService.log('UPDATE', 'course', { title: sanitized.title });
+        // 3. TROCA AQUI: Update via Cloud Function
+        const updateCourseFn = httpsCallable(this.functions, 'updateCourse');
+        await updateCourseFn({ id: editingId, data: sanitized });
       } else {
-        await addDoc(collection(this.firestore, 'courses'), {
+        // 4. TROCA AQUI: Create via Cloud Function
+        const createCourseFn = httpsCallable(this.functions, 'createCourse');
+        await createCourseFn({
           ...sanitized,
           order: this.courses().length + 1,
-          createdAt: new Date(),
         });
-        await this.auditService.log('CREATE', 'course', { title: sanitized.title });
       }
 
       this.form.set({ ...EMPTY_FORM });
@@ -150,8 +143,9 @@ export class AdminCourses implements OnInit {
   protected async deleteCourse(id: string): Promise<void> {
     if (!confirm('Tem certeza que deseja excluir este curso?')) return;
     try {
-      await deleteDoc(doc(this.firestore, 'courses', id));
-      await this.auditService.log('DELETE', 'course', { id });
+      // 5. TROCA AQUI: Delete via Cloud Function
+      const deleteCourseFn = httpsCallable(this.functions, 'deleteCourse');
+      await deleteCourseFn({ id });
     } catch (error) {
       console.error('Erro ao excluir curso:', error);
     }

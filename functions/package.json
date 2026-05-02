@@ -2,8 +2,10 @@
   "name": "functions",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
+    "build": "tsc",
+    "serve": "npm run build && firebase emulators:start --only functions",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,6 +13,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "cloudinary": "^2.10.0",
     "firebase-admin": "^13.8.0",
     "firebase-functions": "^7.2.5",
     "node-fetch": "^3.3.2"
