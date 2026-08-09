@@ -102,7 +102,7 @@ export class SobreMim {
   // Personal highlight numbers displayed on left column.
   protected readonly stats: StatItem[] = [
     { label: 'Experiência', value: '2+ anos' },
-    { label: 'Projetos', value: '8+' },
+    { label: 'Projetos', value: '10+' },
     { label: 'Commits', value: '1000+' },
     { label: 'Café/dia', value: '☕5' },
   ];

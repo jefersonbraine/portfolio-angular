@@ -59,7 +59,7 @@ export class Contato {
       icon: 'mail',
       title: 'Email',
       value: 'jefersonbraineleal@gmail.com',
-      subtitle: 'Respondo em ate 24 horas',
+      subtitle: 'Respondo em até 24 horas',
     },
     {
       icon: 'phone',
@@ -69,22 +69,22 @@ export class Contato {
     },
     {
       icon: 'map-pin',
-      title: 'Localizacao',
+      title: 'Localização',
       value: 'Cerro Azul, Brasil',
       subtitle: 'Disponivel para projetos remotos',
     },
     {
       icon: 'clock',
-      title: 'Horario',
-      value: '9h as 18h',
+      title: 'Horário',
+      value: '9h às 18h',
       subtitle: 'Segunda a Sexta-feira',
     },
   ];
 
   protected readonly benefits: BenefitItem[] = [
-    { icon: 'check-circle', text: 'Resposta rapida' },
+    { icon: 'check-circle', text: 'Resposta rápida' },
     { icon: 'check-circle', text: 'Projetos de qualidade' },
-    { icon: 'check-circle', text: 'Comunicacao clara' },
+    { icon: 'check-circle', text: 'Comunicação clara' },
     { icon: 'check-circle', text: 'Prazos cumpridos' },
   ];
 

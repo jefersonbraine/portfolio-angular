@@ -35,9 +35,9 @@ export class Cursos implements OnInit {
   protected readonly isLoading = signal(true);
 
   protected readonly stats: StatItem[] = [
-    { icon: 'award', label: 'Certificacoes', value: '7', colorClass: 'text-teal-400' },
+    { icon: 'award', label: 'Certificações', value: '8', colorClass: 'text-teal-400' },
     { icon: 'clock', label: 'Horas de Estudo', value: '500+', colorClass: 'text-violet-400' },
-    { icon: 'layers', label: 'Plataformas', value: '4', colorClass: 'text-amber-400' },
+    { icon: 'layers', label: 'Plataformas', value: '5', colorClass: 'text-amber-400' },
   ];
 
   ngOnInit(): void {

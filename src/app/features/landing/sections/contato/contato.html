@@ -2,15 +2,15 @@
   <header class="fade-up mb-12 text-center" [style.animation-delay.ms]="50">
     <h1 class="text-4xl font-bold text-white md:text-5xl">Entre em Contato</h1>
     <p class="mx-auto mt-4 max-w-lg text-gray-400">
-      Vamos trabalhar juntos! Entre em contato para discutir seu proximo projeto ou oportunidade de
-      colaboracao.
+      Vamos trabalhar juntos! Entre em contato para discutir seu próximo projeto ou oportunidade de
+      colaboração.
     </p>
   </header>
 
   <div class="grid gap-6 lg:grid-cols-3">
     <div class="space-y-6">
       <article class="fade-left panel-card p-6" [style.animation-delay.ms]="120">
-        <h3 class="mb-6 font-semibold text-white">Informacoes de Contato</h3>
+        <h3 class="mb-6 font-semibold text-white">Informações de Contato</h3>
 
         <div class="space-y-5">
           @for (info of contactInfo; track info.title) {
@@ -155,9 +155,9 @@
               } @else if (hasError('name', 'minlength')) {
                 <p class="validation-error">Nome precisa ter ao menos 2 caracteres.</p>
               } @else if (hasError('name', 'maxlength')) {
-                <p class="validation-error">Nome pode ter no maximo 80 caracteres.</p>
+                <p class="validation-error">Nome pode ter no máximo 80 caracteres.</p>
               } @else if (hasError('name', 'suspiciousContent')) {
-                <p class="validation-error">Conteudo invalido detectado no campo nome.</p>
+                <p class="validation-error">Conteúdo inválido detectado no campo nome.</p>
               }
             </div>
 
@@ -173,9 +173,9 @@
                 [class.input-shake]="hasInvalidField('email')"
               />
               @if (hasError('email', 'required')) {
-                <p class="validation-error">Email e obrigatorio.</p>
+                <p class="validation-error">Email é obrigatório.</p>
               } @else if (hasError('email', 'email')) {
-                <p class="validation-error">Informe um email valido.</p>
+                <p class="validation-error">Informe um email vélido.</p>
               } @else if (hasError('email', 'maxlength')) {
                 <p class="validation-error">Email muito longo.</p>
               }
@@ -195,7 +195,7 @@
                 [class.input-shake]="hasInvalidField('phone')"
               />
               @if (hasError('phone', 'pattern')) {
-                <p class="validation-error">Informe um telefone valido. Ex: (41) 99650-1459.</p>
+                <p class="validation-error">Informe um telefone válido. Ex: (41) 99650-1459.</p>
               } @else if (hasError('phone', 'maxlength')) {
                 <p class="validation-error">Telefone muito longo.</p>
               }
@@ -227,13 +227,13 @@
               [class.input-shake]="hasInvalidField('subject')"
             />
             @if (hasError('subject', 'required')) {
-              <p class="validation-error">Assunto e obrigatorio.</p>
+              <p class="validation-error">Assunto é obrigatório.</p>
             } @else if (hasError('subject', 'minlength')) {
               <p class="validation-error">Assunto precisa ter ao menos 3 caracteres.</p>
             } @else if (hasError('subject', 'maxlength')) {
-              <p class="validation-error">Assunto pode ter no maximo 120 caracteres.</p>
+              <p class="validation-error">Assunto pode ter no máximo 120 caracteres.</p>
             } @else if (hasError('subject', 'suspiciousContent')) {
-              <p class="validation-error">Conteudo invalido detectado no assunto.</p>
+              <p class="validation-error">Conteúdo inválido detectado no assunto.</p>
             }
           </div>
 
@@ -249,17 +249,17 @@
               [class.input-shake]="hasInvalidField('message')"
             ></textarea>
             @if (hasError('message', 'required')) {
-              <p class="validation-error">Mensagem e obrigatoria.</p>
+              <p class="validation-error">Mensagem é obrigatéria.</p>
             } @else if (hasError('message', 'minlength')) {
               <p class="validation-error">Mensagem precisa ter ao menos 10 caracteres.</p>
             } @else if (hasError('message', 'maxlength')) {
-              <p class="validation-error">Mensagem pode ter no maximo 2000 caracteres.</p>
+              <p class="validation-error">Mensagem pode ter no máximo 2000 caracteres.</p>
             } @else if (hasError('message', 'suspiciousContent')) {
-              <p class="validation-error">Conteudo invalido detectado na mensagem.</p>
+              <p class="validation-error">Conteúdo inválido detectado na mensagem.</p>
             }
           </div>
 
-          <p class="text-xs text-gray-500">(*) Campos obrigatorios</p>
+          <p class="text-xs text-gray-500">(*) Campos obrigatórios</p>
           @if (hasMissingRequiredFields()) {
             <p class="validation-error text-sm">Preencha todos os campos marcados com *.</p>
           }
@@ -298,7 +298,7 @@
   <article class="fade-up panel-card mt-8 p-6 text-center" [style.animation-delay.ms]="240">
     <h3 class="mb-2 font-semibold text-white">Prefere outro meio de contato?</h3>
     <p class="mb-6 text-sm text-gray-400">
-      Voce tambem pode me encontrar nas redes sociais ou agendar uma conversa diretamente pelo
+      Você também pode me encontrar nas redes sociais ou agendar uma conversa diretamente pelo
       LinkedIn ou WhatsApp para discutirmos seu projeto.
     </p>
 
