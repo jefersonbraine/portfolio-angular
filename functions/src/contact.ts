@@ -1,8 +1,7 @@
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret, defineString } from 'firebase-functions/params';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
-import { createHash } from 'crypto';
-import { checkRateLimit } from './rate-limit';
+import { createHash } from 'crypto';import { checkRateLimit } from './rate-limit';
 
 const resendApiKey = defineSecret('RESEND_API_KEY');
 // E-mail que RECEBE as mensagens (para a conta gratuita do Resend, deve ser o e-mail da conta)
