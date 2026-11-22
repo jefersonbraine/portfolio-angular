@@ -13,3 +13,5 @@ export { createProject, updateProject, deleteProject } from './projects';
 export { createCourse, updateCourse, deleteCourse } from './courses';
 
 export { getCloudinarySignature } from './media';
+
+export { sendContactMessage } from './contact';

@@ -1,12 +1,15 @@
 // functions/src/rate-limit.ts
 import { getFirestore } from 'firebase-admin/firestore';
 
-export async function checkRateLimit(uid: string, action: string): Promise<void> {
+export async function checkRateLimit(
+  uid: string,
+  action: string,
+  maxCalls = 20,
+): Promise<void> {
   const db = getFirestore();
   const ref = db.doc(`rate_limits/${uid}_${action}`);
   const now = Date.now();
   const windowMs = 15 * 60 * 1000;
-  const maxCalls = 20;
 
   await db.runTransaction(async (transaction) => {
     const doc = await transaction.get(ref);

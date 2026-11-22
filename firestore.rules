@@ -22,6 +22,12 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    // Mensagens do formulário de contato: gravadas só pela Cloud Function (Admin SDK)
+    match /messages/{messageId} {
+      allow read, update, delete: if isAdmin();
+      allow create: if false;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
