@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Functions, httpsCallable } from '@angular/fire/functions';
 import {
   AbstractControl,
   FormBuilder,
@@ -47,6 +48,8 @@ type FormField = 'name' | 'email' | 'phone' | 'priority' | 'subject' | 'message'
 })
 export class Contato {
   private readonly fb = new FormBuilder();
+  private readonly functions = inject(Functions);
+  protected readonly submitError = signal<string | null>(null);
   private readonly phonePattern = /^(\+?55\s?)?(\(?\d{2}\)?\s?)?\d{4,5}-?\d{4}$/;
   private readonly allowedPriorities = ['baixa', 'media', 'alta'];
 
@@ -169,28 +172,31 @@ export class Contato {
     }
 
     this.isSubmitting.set(true);
+    this.submitError.set(null);
 
-    window.setTimeout(() => {
-      this.isSubmitting.set(false);
-
-      this.isSwitchingToSuccess.set(true);
-      window.setTimeout(() => {
-        this.isSwitchingToSuccess.set(false);
-        this.isSubmitted.set(true);
-
+    const sendFn = httpsCallable(this.functions, 'sendContactMessage');
+    sendFn({ ...this.form.getRawValue(), website: '' })
+      .then(() => {
+        this.isSubmitting.set(false);
+        this.isSwitchingToSuccess.set(true);
         window.setTimeout(() => {
-          this.isSubmitted.set(false);
-          this.form.reset({
-            name: '',
-            email: '',
-            phone: '',
-            priority: '',
-            subject: '',
-            message: '',
-          });
-        }, 3000);
-      }, 190);
-    }, 1200);
+          this.isSwitchingToSuccess.set(false);
+          this.isSubmitted.set(true);
+
+          window.setTimeout(() => {
+            this.isSubmitted.set(false);
+            this.form.reset();
+          }, 3000);
+        }, 190);
+      })
+      .catch((error: { code?: string }) => {
+        this.isSubmitting.set(false);
+        this.submitError.set(
+          error.code === 'functions/resource-exhausted'
+            ? 'Muitas mensagens enviadas. Tente novamente mais tarde.'
+            : 'Não foi possível enviar sua mensagem. Tente novamente ou use o email/WhatsApp.',
+        );
+      });
   }
 
   private applyInputSanitization(): void {

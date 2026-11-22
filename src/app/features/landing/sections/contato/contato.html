@@ -264,6 +264,10 @@
             <p class="validation-error text-sm">Preencha todos os campos marcados com *.</p>
           }
 
+          @if (submitError()) {
+            <p class="validation-error text-sm" role="alert">{{ submitError() }}</p>
+          }
+
           <button type="submit" [disabled]="isSubmitting()" class="send-btn h-12 w-full">
             @if (isSubmitting()) {
               <span class="send-btn-content inline-flex items-center gap-2">
